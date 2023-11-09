@@ -1,6 +1,6 @@
 ﻿  shoot.c
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(30,39): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(29,39): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(30,42): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
 C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(31,42): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(32,42): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(77,37): warning C4133: 'fonction' : types incompatibles - de 'sfWindow *' à 'sfRenderWindow *'
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(80,37): warning C4133: 'fonction' : types incompatibles - de 'sfWindow *' à 'sfRenderWindow *'
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

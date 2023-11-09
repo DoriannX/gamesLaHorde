@@ -12,7 +12,6 @@
 
 #define PI 3.141592 
 
-bool shooted = false;
 int nbProjectile = 0;
 
 
@@ -40,20 +39,25 @@ void createProjectile() {
 }
 
 void shoot(sfWindow* window) {
-	if (sfTime_asSeconds(sfClock_getElapsedTime(lifeTimeShoot)) > 2) {
+	if (sfTime_asSeconds(sfClock_getElapsedTime(lifeTimeShoot)) > 1) {
 		if (nbProjectile - minToDisplay > -1) {
 			sfClock_restart(lifeTimeShoot);
 			minToDisplay++;
 		}
 	}
 	if (sfKeyboard_isKeyPressed(sfKeySpace)) {
-		if (sfTime_asSeconds(sfClock_getElapsedTime(timeBetweenShoot)) > 1) {
+		if (sfTime_asSeconds(sfClock_getElapsedTime(timeBetweenShoot)) > .5f) {
 			if (nbProjectile - minToDisplay == -1) {
 				sfClock_restart(lifeTimeShoot);
 			}
 			sfClock_restart(timeBetweenShoot);
-			createProjectile();
-			shooted = true;
+			if (nbProjectile < 9) {
+				createProjectile();
+			}
+			else if (nbProjectile - minToDisplay == -1) {
+				nbProjectile = 0;
+				minToDisplay = 1;
+			}
 		}
 	}
 	for (int i = minToDisplay; i <= nbProjectile; i++) {
@@ -75,5 +79,4 @@ void shoot(sfWindow* window) {
 		sfRectangleShape_setPosition(projectile[i].rectangle, projectile[i].position);
 		sfRenderWindow_drawRectangleShape(window, projectile[i].rectangle, NULL);
 	}
-	printInt(nbProjectile - minToDisplay, 24, (sfVector2f) { 100, 300 }, sfWhite, window);
 }

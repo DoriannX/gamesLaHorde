@@ -1,0 +1,7 @@
+﻿  main.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(41,58): warning C4244: '=' : conversion de 'unsigned int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(41,120): warning C4244: '=' : conversion de 'unsigned int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(54,27): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(87,35): warning C4133: 'fonction' : types incompatibles - de 'sfRenderWindow *' à 'sfWindow *'
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(88,9): warning C4013: 'shoot' non défini(e) ; extern retournant int pris par défaut
+  asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

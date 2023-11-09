@@ -17,4 +17,6 @@ typedef struct {
 	float rotation;
 }object;
 
-object projectile;
+object* projectile;
+sfClock* timeBetweenShoot;
+sfClock* lifeTimeShoot;

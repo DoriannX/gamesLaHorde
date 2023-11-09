@@ -41,31 +41,20 @@ void init() { // initialise les variables
     asteroide.position.x = screenSize.width * (1920 / 2) / 1920; asteroide.position.y = screenSize.height * (1080 / 2) / 1080;
     createSprite(asteroide.sprite, asteroide.texture,asteroide.origin, asteroide.scale, -90, asteroide.position);
 
+    projectile = malloc(sizeof(projectile));
     arial = sfFont_createFromFile("arial.ttf");
     beginning = sfClock_create();
-
-    projectile.color = sfWhite;
-    projectile.direction = asteroide.direction;
-    projectile.bounds.x = 15;
-    projectile.bounds.y = 5;
-    projectile.position = asteroide.position;
-    projectile.previousPosition = projectile.position;
-    projectile.rectangle = sfRectangleShape_create();
-    projectile.rotation = angle;
-    projectile.speed = 50;
-
-    sfRectangleShape_setFillColor(projectile.rectangle, sfWhite);
-    sfRectangleShape_setRotation(projectile.rectangle, projectile.rotation);
-    sfRectangleShape_setSize(projectile.rectangle, projectile.bounds);
-    sfRectangleShape_setOrigin(projectile.rectangle, (sfVector2f) { projectile.bounds.x / 2, projectile.bounds.y / 2 });
-    sfRectangleShape_setPosition(projectile.rectangle, projectile.position);
+    timeBetweenShoot = sfClock_create();
+    lifeTimeShoot = sfClock_create();
 }
 
 void destroy() {
     sfSprite_destroy(asteroide.sprite);
     sfTexture_destroy(asteroide.texture);
     sfRenderWindow_destroy(window);
-    sfRectangleShape_destroy(projectile.rectangle);
+    sfClock_destroy(timeBetweenShoot);
+    sfClock_destroy(lifeTimeShoot);
+    free(projectile);
 }
 
 int main() {

@@ -135,12 +135,14 @@
     <ClCompile Include="dt.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="print.c" />
+    <ClCompile Include="shoot.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arial.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="dt.h" />
     <ClInclude Include="print.h" />
+    <ClInclude Include="shoot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

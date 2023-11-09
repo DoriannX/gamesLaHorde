@@ -1,5 +1,9 @@
+#include <SFML/Window.h>
+#include <SFML/Graphics.h>
+#include <SFML/System.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 typedef struct  {
 	int vie;
 	sfSprite* sprite;
@@ -17,5 +21,8 @@ typedef struct  {
 	float rotation;
 }character;
 
-character moveCharacter(character* asteroide, sfWindow* window);
+character asteroide;
+int angle;
+
+void moveCharacter(character* asteroide, sfWindow* window);
 void createSprite(sfSprite* sprite, sfTexture* texture, sfVector2f origin, sfVector2f scale, float rotation, sfVector2f position);

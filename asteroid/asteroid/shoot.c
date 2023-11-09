@@ -13,41 +13,67 @@
 #define PI 3.141592 
 
 bool shooted = false;
+int nbProjectile = 0;
 
 
+int minToDisplay = 1;
+void createProjectile() {
+		if (nbProjectile - minToDisplay == -1) {
+			sfClock_restart(lifeTimeShoot);
+		}
+		nbProjectile++;
+		projectile[nbProjectile].color = sfWhite;
+		projectile[nbProjectile].bounds.x = 15;
+		projectile[nbProjectile].bounds.y = 5;
+		projectile[nbProjectile].rectangle = sfRectangleShape_create();
+		projectile[nbProjectile].speed = 5;
+		projectile[nbProjectile].rotation = angle;
+		projectile[nbProjectile].direction.x = cos(angle * PI / 180);
+		projectile[nbProjectile].direction.y = sin(angle * PI / 180);
+		projectile[nbProjectile].position = asteroide.position;
 
-//object createProjectile() {
-//	object projectileTemp = {
-//		.color = sfWhite,
-//		.direction = asteroide.direction,
-//		.bounds.x = 15,
-//		.bounds.y = 5,
-//		.position = asteroide.position,
-//		.previousPosition = projectile.position,
-//		.rectangle = sfRectangleShape_create(),
-//		.rotation = angle,
-//		.speed = 50
-//	}
-//	
-//	return projectileTemp;
-//}
-
+		sfRectangleShape_setFillColor(projectile[nbProjectile].rectangle, sfWhite);
+		sfRectangleShape_setRotation(projectile[nbProjectile].rectangle, projectile[nbProjectile].rotation);
+		sfRectangleShape_setSize(projectile[nbProjectile].rectangle, projectile[nbProjectile].bounds);
+		sfRectangleShape_setOrigin(projectile[nbProjectile].rectangle, (sfVector2f) { projectile[nbProjectile].bounds.x / 2, projectile[nbProjectile].bounds.y / 2 });
+		sfRectangleShape_setPosition(projectile[nbProjectile].rectangle, projectile[nbProjectile].position);
+}
 
 void shoot(sfWindow* window) {
+	if (sfTime_asSeconds(sfClock_getElapsedTime(lifeTimeShoot)) > 2) {
+		if (nbProjectile - minToDisplay > -1) {
+			sfClock_restart(lifeTimeShoot);
+			minToDisplay++;
+		}
+	}
 	if (sfKeyboard_isKeyPressed(sfKeySpace)) {
-		//createProjectile();
-		shooted = true;
-		projectile.direction.x = cos(angle * PI / 180);
-		projectile.direction.y = sin(angle * PI / 180);
-		projectile.position = asteroide.position;
-		projectile.previousPosition = projectile.position;
-		projectile.rotation = angle;
-		sfRectangleShape_setRotation(projectile.rectangle, projectile.rotation);
+		if (sfTime_asSeconds(sfClock_getElapsedTime(timeBetweenShoot)) > 1) {
+			if (nbProjectile - minToDisplay == -1) {
+				sfClock_restart(lifeTimeShoot);
+			}
+			sfClock_restart(timeBetweenShoot);
+			createProjectile();
+			shooted = true;
+		}
 	}
-	if (shooted) {
-		projectile.position.x += projectile.speed * projectile.direction.x;
-		projectile.position.y += projectile.speed * projectile.direction.y;
-		sfRectangleShape_setPosition(projectile.rectangle, projectile.position);
-		sfRenderWindow_drawRectangleShape(window, projectile.rectangle, NULL);
+	for (int i = minToDisplay; i <= nbProjectile; i++) {
+		projectile[i].position.x += projectile[i].speed * projectile[i].direction.x;
+		projectile[i].position.y += projectile[i].speed * projectile[i].direction.y;
+		if (projectile[i].position.x > 1920 + 120) {
+			projectile[i].position.x = -120;
+		}
+		if (projectile[i].position.x < -120) {
+			projectile[i].position.x = 1920 + 120;
+		}
+
+		if (projectile[i].position.y > 1080 + 120) {
+			projectile[i].position.y = -120;
+		}
+		if (projectile[i].position.y < -120) {
+			projectile[i].position.y = 1080 + 120;
+		}
+		sfRectangleShape_setPosition(projectile[i].rectangle, projectile[i].position);
+		sfRenderWindow_drawRectangleShape(window, projectile[i].rectangle, NULL);
 	}
+	printInt(nbProjectile - minToDisplay, 24, (sfVector2f) { 100, 300 }, sfWhite, window);
 }

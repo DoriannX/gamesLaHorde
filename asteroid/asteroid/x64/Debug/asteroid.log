@@ -1,7 +1,20 @@
 ﻿  character.c
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(25,64): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(26,64): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(41,155): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(56,91): warning C4244: 'fonction' : conversion de 'int' en 'float', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(57,28): warning C4133: 'fonction' : types incompatibles - de 'sfWindow *' à 'sfRenderWindow *'
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(31,64): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(32,64): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(47,155): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(62,91): warning C4244: 'fonction' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(63,28): warning C4133: 'fonction' : types incompatibles - de 'sfWindow *' à 'sfRenderWindow *'
+  main.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(41,58): warning C4244: '=' : conversion de 'unsigned int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(41,120): warning C4244: '=' : conversion de 'unsigned int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(54,27): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(87,35): warning C4133: 'fonction' : types incompatibles - de 'sfRenderWindow *' à 'sfWindow *'
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\main.c(88,9): warning C4013: 'shoot' non défini(e) ; extern retournant int pris par défaut
+  shoot.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(40,28): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(41,28): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(44,25): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\shoot.c(51,37): warning C4133: 'fonction' : types incompatibles - de 'sfWindow *' à 'sfRenderWindow *'
+  Génération de code en cours...
+  LINK : C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe introuvable ou non généré par la dernière édition de liens incrémentielle ; édition de liens complète en cours
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

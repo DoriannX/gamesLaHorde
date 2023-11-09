@@ -9,13 +9,19 @@
 #define PI 3.141592 
 
 
-int angle = -90;
-character moveCharacter(character* asteroide, sfWindow* window){ // deplace un character
+angle = 360-90;
+void moveCharacter(character* asteroide, sfWindow* window){ // deplace un character
 	if (sfKeyboard_isKeyPressed(sfKeyRight) || sfKeyboard_isKeyPressed(sfKeyD)) {
 		angle += 5;
+		if (angle > 360) {
+			angle = 0;
+		}
 	}
 	if (sfKeyboard_isKeyPressed(sfKeyLeft) || sfKeyboard_isKeyPressed(sfKeyQ)) {
 		angle -= 5;
+		if (angle < 0) {
+			angle = 360;
+		}
 	}
 
 	sfVector2f impulse = { 0, 0 };
@@ -56,7 +62,6 @@ character moveCharacter(character* asteroide, sfWindow* window){ // deplace un c
 	createSprite(asteroide->sprite, asteroide->texture, asteroide->origin, asteroide->scale, angle, asteroide->position);
 	sfRenderWindow_drawSprite(window, asteroide->sprite, NULL);
 	sfSprite_setPosition(asteroide->sprite, asteroide->position);
-	return *asteroide;
 }
 
 void createSprite(sfSprite* sprite, sfTexture* texture, sfVector2f origin, sfVector2f scale, float rotation, sfVector2f position) { // initialise un sprite

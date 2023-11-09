@@ -30,6 +30,9 @@
     <ClCompile Include="arial.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="shoot.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h">
@@ -42,6 +45,9 @@
       <Filter>Fichiers sources</Filter>
     </ClInclude>
     <ClInclude Include="arial.h">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="shoot.h">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
   </ItemGroup>

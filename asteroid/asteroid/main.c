@@ -1,84 +1,85 @@
 #include <SFML/Window.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <time.h>
+
 #include "character.h"
-#include "print.h"
 #include "dt.h"
 #include "arial.h"
 #include "shoot.h"
-#define PI 3.141592 
+#include "spaceship.h"
 sfVideoMode screenSize;
 sfVideoMode mode;
-// création des variables
-character asteroide = {
-    .vie = 3,
-    .sprite = sfNone,
-    .spriteSize = {0, 0},
-    .texture = sfNone,
-    .position = {1920 / 2, 1080 / 2},
-    .previousPosition = {1920 / 2, 1080 / 2},
-    .speed = 0,
-    .speedMax = 1,
-    .acceleration = .05f,
-    .deceleration = .99f,
-    .direction = {0, 0},
-    .scale = {0.15f, 0.15f},
-    .origin = {1, 1},
-    .rotation = 0
+// creation des variables
+character asteroid = {
+	.vie = 3,
+	.sprite = 0,
+	.sprite_size = {0, 0},
+	.texture = 0,
+	.position = {(float)1920 / 2, (float)1080 / 2},
+	.previous_position = {(float)1920 / 2, (float)1080 / 2},
+	.speed = 0,
+	.speed_max = 0.5f,
+	.acceleration = .01f,
+	.deceleration = .99f,
+	.direction = {0, 0},
+	.scale = {0.15f, 0.15f},
+	.origin = {1, 1},
+	.rotation = 0
 };
 sfRenderWindow* window;
 
-void init() { // initialise les variables
-    screenSize = sfVideoMode_getDesktopMode();
+void init(void) { // initialise les variables
 
-    asteroide.sprite = sfSprite_create();
-    asteroide.texture = sfTexture_createFromFile("sprites/spriteAsteroide.png", NULL);
-    asteroide.spriteSize = (sfVector2f){ 1024, 1024 };
-    asteroide.origin = (sfVector2f){ asteroide.spriteSize.x / 2, asteroide.spriteSize.y / 2 };
-    asteroide.position.x = screenSize.width * (1920 / 2) / 1920; asteroide.position.y = screenSize.height * (1080 / 2) / 1080;
-    createSprite(asteroide.sprite, asteroide.texture,asteroide.origin, asteroide.scale, -90, asteroide.position);
+	srand((unsigned int)time(0));
+	screenSize = sfVideoMode_getDesktopMode();
 
-    projectile = malloc(sizeof(projectile));
-    arial = sfFont_createFromFile("arial.ttf");
-    beginning = sfClock_create();
-    timeBetweenShoot = sfClock_create();
-    lifeTimeShoot = sfClock_create();
+	asteroid.sprite = sfSprite_create();
+	asteroid.texture = sfTexture_createFromFile("sprites/spriteAsteroid.png", NULL);
+	asteroid.sprite_size = (sfVector2f){ 1024, 1024 };
+	asteroid.origin = (sfVector2f){ asteroid.sprite_size.x / 2, asteroid.sprite_size.y / 2 };
+	asteroid.position.x = (float)screenSize.width * ((int)1920 / 2) / 1920; asteroid.position.y = (float)screenSize.height * ((int)1080 / 2) / 1080;
+	create_sprite(asteroid.sprite, asteroid.texture, asteroid.origin, asteroid.scale, -90, asteroid.position);
+
+	arial = sfFont_createFromFile("arial.ttf");
+	beginning = sfClock_create();
+	time_between_shoot = sfClock_create();
+	life_time_shoot = sfClock_create();
+
 }
 
-void destroy() {
-    sfSprite_destroy(asteroide.sprite);
-    sfTexture_destroy(asteroide.texture);
-    sfRenderWindow_destroy(window);
-    sfClock_destroy(timeBetweenShoot);
-    sfClock_destroy(lifeTimeShoot);
-    free(projectile);
+void destroy(void) {
+	sfSprite_destroy(asteroid.sprite);
+	sfTexture_destroy(asteroid.texture);
+	sfRenderWindow_destroy(window);
+	sfClock_destroy(time_between_shoot);
+	sfClock_destroy(life_time_shoot);
 }
 
-int main() {
-    sfClock* beginning = sfClock_create();
-    init();
-    mode.width = screenSize.width;
-    mode.height = screenSize.height;
-    mode.bitsPerPixel = 32;
-    window = sfRenderWindow_create(mode, "CSFML Test", sfFullscreen, NULL);
-    sfRenderWindow_setFramerateLimit(window, 60);
-    while (sfRenderWindow_isOpen(window)) {
-        sfEvent event;
-        if (!sfRenderWindow_pollEvent(window, &event)) {
-            if (event.type == sfEvtClosed)
-                sfRenderWindow_close(window);
-        }
-        sfRenderWindow_clear(window, sfBlack);
-        deltaTime();
-        moveCharacter(&asteroide, window);
-        shoot(window);
-        sfRenderWindow_display(window);
-    }
+int main(void) {
+	beginning = sfClock_create();
+	init();
+	mode.width = screenSize.width;
+	mode.height = screenSize.height;
+	mode.bitsPerPixel = 32;
+	window = sfRenderWindow_create(mode, "Asteroid", sfFullscreen, NULL);
+	sfRenderWindow_setFramerateLimit(window, 60);
+	while (sfRenderWindow_isOpen(window)) {
+		sfEvent event;
+		if (!sfRenderWindow_pollEvent(window, &event)) {
+			if (event.type == sfEvtClosed)
+				sfRenderWindow_close(window);
+		}
+		sfRenderWindow_clear(window, sfBlack);
+		delta_time();
+		shoot(window);
+		move_character(&asteroid, window);
+		spawn_spaceship(window);
+		sfRenderWindow_display(window);
+	}
 
-    destroy();
+	destroy();
 
-    return 0;
+	return 0;
 }

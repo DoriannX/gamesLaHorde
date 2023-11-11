@@ -71,11 +71,15 @@ int main(void) {
 			if (event.type == sfEvtClosed)
 				sfRenderWindow_close(window);
 		}
+
 		sfRenderWindow_clear(window, sfBlack);
 		delta_time();
-		shoot(window);
-		move_character(&asteroid, window);
-		spawn_spaceship(window);
+		if (!collision_spaceship())
+		{
+			shoot(window);
+			move_character(&asteroid, window);
+			spawn_spaceship(window);
+		}
 		sfRenderWindow_display(window);
 	}
 

@@ -5,7 +5,6 @@
 #include <math.h>
 #include "shoot.h"
 #include "character.h"
-#include "print.h"
 #include "spaceship.h"
 
 #define PI 3.141592
@@ -52,7 +51,7 @@ int collision(sfRenderWindow* window, const int j, const char* size)
 			}
 		}
 		return collision_box[j];
-	}else
+	}else if(size == "average")
 	{
 		int collision_box[10] = { 0 };
 		for (int i = min_to_display; i <= nb_projectile; i++)
@@ -66,6 +65,24 @@ int collision(sfRenderWindow* window, const int j, const char* size)
 			}
 		}
 		return collision_box[j];
+	}
+	else if(size == "small")
+	{
+		int collision_box[20] = { 0 };
+		for (int i = min_to_display; i <= nb_projectile; i++)
+		{
+			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_small[j].position.x) <= 15 && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_small[j].position.y) <= 15;
+			if (collision_box[j])
+			{
+				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
+				min_to_display++;
+				break;
+			}
+		}
+		return collision_box[j];
+	}else
+	{
+		return 0;
 	}
 
 }

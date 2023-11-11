@@ -6,6 +6,7 @@ void create_spaceship(character* spaceship_to_create);
 void spawn_spaceship(sfRenderWindow* window);
 character spaceship[5];
 character spaceship_average[10];
-character spaceship_little[20];
+character spaceship_small[20];
+int collision_spaceship(void);
 
 #endif

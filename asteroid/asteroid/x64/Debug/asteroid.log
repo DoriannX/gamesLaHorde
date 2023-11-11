@@ -1,2 +1,5 @@
-﻿  shoot.c
+﻿  spaceship.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(22,1): warning C4026: fonction déclarée avec une liste de paramètres formels
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(38,52): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(38,71): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

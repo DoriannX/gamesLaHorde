@@ -15,6 +15,7 @@ typedef struct {
 	sfVector2f scale;
 	sfVector2f origin;
 	int rotation;
+	int little;
 }character;
 
 character asteroid;

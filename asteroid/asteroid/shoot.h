@@ -21,7 +21,8 @@ sfClock* time_between_shoot;
 sfClock* life_time_shoot;
 object projectile[10];
 void shoot(sfRenderWindow* window);
-int collision(sfRenderWindow* window, const int j);
+int collision(sfRenderWindow* window, const int j, const char* size);
 int min_to_display;
+int min_to_display_average;
 #endif
 

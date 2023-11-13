@@ -1,3 +1,4 @@
+
 #include <SFML/Graphics.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +28,8 @@ void print_int(const int number, const int size, const sfVector2f position, cons
 	sfText_setColor(integer, color);
 	sfText_setOrigin(integer, (sfVector2f) { sfText_getLocalBounds(integer).width / 2.0f, sfText_getLocalBounds(integer).height });
 	sfRenderWindow_drawText(window, integer, NULL);
+
+	sfText_destroy(integer);
 }
 
 void print_float(const float number, const int size, const sfVector2f position, sfRenderWindow* window) {// affiche un float dans la window
@@ -40,4 +43,5 @@ void print_float(const float number, const int size, const sfVector2f position, 
 	sfText_setPosition(floater, position);
 	sfText_setOrigin(floater, (sfVector2f) { sfText_getLocalBounds(floater).width / 2.0f, sfText_getLocalBounds(floater).height });
 	sfRenderWindow_drawText(window, floater, NULL);
+	sfText_destroy(floater);
 }

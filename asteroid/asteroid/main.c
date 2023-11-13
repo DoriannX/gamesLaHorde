@@ -1,3 +1,4 @@
+
 #include <SFML/Window.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
@@ -8,66 +9,57 @@
 #include "dt.h"
 #include "arial.h"
 #include "gameOver.h"
+#include "print.h"
+#include "score_manager.h"
 #include "shoot.h"
 #include "spaceship.h"
 #include "special_attack.h"
-sfVideoMode screenSize;
+sfVideoMode screen_size;
 sfVideoMode mode;
 // creation des variables
-character asteroid = {
-	.vie = 3,
-	.sprite = 0,
-	.sprite_size = {0, 0},
-	.texture = 0,
-	.position = {(float)1920 / 2, (float)1080 / 2},
-	.previous_position = {(float)1920 / 2, (float)1080 / 2},
-	.speed = 0,
-	.speed_max = 0.5f,
-	.acceleration = .01f,
-	.deceleration = .99f,
-	.direction = {0, 0},
-	.scale = {0.15f, 0.15f},
-	.origin = {1, 1},
-	.rotation = 0
-};
+
 sfRenderWindow* window;
 
 void init(void) { // initialise les variables
-
-	srand((unsigned int)time(0));
-	screenSize = sfVideoMode_getDesktopMode();
+	srand(time(NULL));
+	screen_size = sfVideoMode_getDesktopMode();
 
 	asteroid.sprite = sfSprite_create();
 	asteroid.texture = sfTexture_createFromFile("sprites/spriteAsteroid.png", NULL);
 	asteroid.sprite_size = (sfVector2f){ 1024, 1024 };
 	asteroid.origin = (sfVector2f){ asteroid.sprite_size.x / 2, asteroid.sprite_size.y / 2 };
-	asteroid.position.x = (float)screenSize.width * ((int)1920 / 2) / 1920; asteroid.position.y = (float)screenSize.height * ((int)1080 / 2) / 1080;
+	asteroid.position.x = (float)screen_size.width * ((int)1920 / 2) / 1920; asteroid.position.y = (float)screen_size.height * ((int)1080 / 2) / 1080;
 	create_sprite(asteroid.sprite, asteroid.texture, asteroid.origin, asteroid.scale, -90, asteroid.position);
 
+	beginning = sfClock_create();
 	arial = sfFont_createFromFile("arial.ttf");
 	beginning = sfClock_create();
 	time_between_shoot = sfClock_create();
 	life_time_shoot = sfClock_create();
 	explode_time = sfClock_create();
 
+	mode.width = screen_size.width; // donne a la fenetre la taille de l'ecran
+	mode.height = screen_size.height;
+	mode.bitsPerPixel = 32;
+	window = sfRenderWindow_create(mode, "Asteroid", sfFullscreen, NULL); // creer une window
+	sfRenderWindow_setFramerateLimit(window, 60); // limite les fps a 60
 }
 
-void destroy(void) {
+void destroy(void) { // detruit tous les sprites, textures, clock etc
 	sfSprite_destroy(asteroid.sprite);
 	sfTexture_destroy(asteroid.texture);
 	sfRenderWindow_destroy(window);
 	sfClock_destroy(time_between_shoot);
 	sfClock_destroy(life_time_shoot);
+	sfFont_destroy(arial);
+	sfClock_destroy(explode_time);
+	sfClock_destroy(beginning);
+	destroy_projectile();
+	destroy_spaceship();
 }
 
-int main(void) {
-	beginning = sfClock_create();
-	init();
-	mode.width = screenSize.width;
-	mode.height = screenSize.height;
-	mode.bitsPerPixel = 32;
-	window = sfRenderWindow_create(mode, "Asteroid", sfFullscreen, NULL);
-	sfRenderWindow_setFramerateLimit(window, 60);
+int main(void) { // main
+	init(); // initialise toutes les variables
 	while (sfRenderWindow_isOpen(window)) {
 		sfEvent event;
 		if (!sfRenderWindow_pollEvent(window, &event)) {
@@ -76,13 +68,14 @@ int main(void) {
 		}
 
 		sfRenderWindow_clear(window, sfBlack);
-		delta_time();
-		if (!is_game_over())
+		delta_time(); // actualise le delta temps
+		if (!is_game_over()) // si la partie n'est pas perdu
 		{
-			lose_life(window);
-			shoot(window);
-			move_character(&asteroid, window);
-			spawn_spaceship(window);
+			update_life(); // actualise les vies
+			shoot(window); // permet au joueur de tirer 
+			move_character(&asteroid, window); // deplace le personnage
+			spawn_spaceship(window); // fait apparaitre des vaisseau 
+			print_int(return_score(), 24, (sfVector2f) { 100, 100 }, sfWhite, window);
 		}
 		sfRenderWindow_display(window);
 	}

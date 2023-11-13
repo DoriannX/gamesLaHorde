@@ -1,18 +1,14 @@
-#include <SFML/Window.h>
-#include <SFML/Graphics.h>
-#include <SFML/System.h>
-#include <stdlib.h>
-#include <time.h>
+
 #include "gameOver.h"
 
 int game_over = 0;
 
-void set_game_over(void)
+void set_game_over(void) // met l'etat de game over pour le jeu
 {
 	game_over = 1;
 }
 
 int is_game_over(void)
 {
-	return game_over;
+	return game_over; // retourne si le jeu est en etat de game over ou pas
 }

@@ -27,9 +27,6 @@
     <ClCompile Include="dt.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="arial.c">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="shoot.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -40,6 +37,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="gameOver.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="score_manager.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,6 +66,9 @@
       <Filter>Fichiers sources</Filter>
     </ClInclude>
     <ClInclude Include="gameOver.h">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="score_manager.h">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
   </ItemGroup>

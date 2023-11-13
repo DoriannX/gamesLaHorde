@@ -121,13 +121,28 @@ void reset_pos_spaceship(void)
 	}
 	for (int i = 0; i < 10; i++)
 	{
-		spaceship_average[i].previous_position = spaceship_average[i].position;
-		sfSprite_setPosition(spaceship_average[i].sprite, spaceship_average[i].position);
+		if (spaceship[i / 2].little)
+		{
+			spaceship_average[i].position = (sfVector2f){ (int)zone_x[zone], (int)zone_y[zone] };
+			sfSprite_setPosition(spaceship_average[i].sprite, spaceship_average[i].position);
+		}
+		else
+		{
+			spaceship_average[i].previous_position = spaceship_average[i].position;
+			sfSprite_setPosition(spaceship_average[i].sprite, spaceship_average[i].position);
+		}
 	}
 	for (int i = 0; i < 20; i++)
 	{
-		spaceship_small[i].position = spaceship_average[i / 2].position;
-		sfSprite_setPosition(spaceship_small[i].sprite, spaceship_small[i].position);
+		if (spaceship_average[i / 2].little)
+		{
+			spaceship_small[i].position = (sfVector2f){ (int)zone_x[zone], (int)zone_y[zone] };
+			sfSprite_setPosition(spaceship_small[i].sprite, spaceship_small[i].position);
+		}else
+		{
+			spaceship_small[i].position = spaceship_average[i / 2].position;
+			sfSprite_setPosition(spaceship_small[i].sprite, spaceship_small[i].position);
+		}
 	}
 
 }
@@ -259,7 +274,6 @@ void spawn_spaceship(sfRenderWindow* window) {
 			{
 				sfRenderWindow_drawSprite(window, spaceship[i].sprite, NULL);
 			}
-			print_int((explode(window)), 24, (sfVector2f) { 100, 200 }, sfWhite, window); 
 			if (collision(window, i, "big") || explode(window))
 			{
 				spaceship[i].position = (sfVector2f){ INFINITY, INFINITY };

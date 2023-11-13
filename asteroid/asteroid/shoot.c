@@ -5,6 +5,7 @@
 #include <math.h>
 #include "shoot.h"
 #include "character.h"
+#include "score_manager.h"
 #include "spaceship.h"
 
 #define PI 3.141592
@@ -45,6 +46,7 @@ int collision(sfRenderWindow* window, const int j, const char* size)
 			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship[j].position.x) <= 100 && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship[j].position.y) <= 100;
 			if (collision_box[j])
 			{
+				add_score(25);
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
 				min_to_display++;
 				break;
@@ -59,6 +61,7 @@ int collision(sfRenderWindow* window, const int j, const char* size)
 			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_average[j].position.x) <= 50 && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_average[j].position.y) <= 50;
 			if (collision_box[j])
 			{
+				add_score(50);
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
 				min_to_display++;
 				break;
@@ -74,6 +77,7 @@ int collision(sfRenderWindow* window, const int j, const char* size)
 			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_small[j].position.x) <= 15 && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_small[j].position.y) <= 15;
 			if (collision_box[j])
 			{
+				add_score(100);
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
 				min_to_display++;
 				break;

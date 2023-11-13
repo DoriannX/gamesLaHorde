@@ -8,6 +8,8 @@
 #include "dt.h"
 #include "arial.h"
 #include "gameOver.h"
+#include "print.h"
+#include "score_manager.h"
 #include "shoot.h"
 #include "spaceship.h"
 #include "special_attack.h"
@@ -83,6 +85,7 @@ int main(void) {
 			shoot(window);
 			move_character(&asteroid, window);
 			spawn_spaceship(window);
+			print_int(return_score(), 24, (sfVector2f) { 100, 100 }, sfWhite, window);
 		}
 		sfRenderWindow_display(window);
 	}

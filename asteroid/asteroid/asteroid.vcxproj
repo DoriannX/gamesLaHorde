@@ -136,6 +136,7 @@
     <ClCompile Include="gameOver.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="print.c" />
+    <ClCompile Include="score_manager.c" />
     <ClCompile Include="shoot.c" />
     <ClCompile Include="spaceship.c" />
     <ClCompile Include="special_attack.c" />
@@ -146,6 +147,7 @@
     <ClInclude Include="dt.h" />
     <ClInclude Include="gameOver.h" />
     <ClInclude Include="print.h" />
+    <ClInclude Include="score_manager.h" />
     <ClInclude Include="shoot.h" />
     <ClInclude Include="spaceship.h" />
     <ClInclude Include="special_attack.h" />

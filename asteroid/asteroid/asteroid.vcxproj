@@ -130,7 +130,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="arial.c" />
     <ClCompile Include="character.c" />
     <ClCompile Include="dt.c" />
     <ClCompile Include="gameOver.c" />

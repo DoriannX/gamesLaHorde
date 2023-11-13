@@ -1,20 +1,14 @@
-#include <SFML/Window.h>
-#include <SFML/Graphics.h>
-#include <SFML/System.h>
-#include <stdlib.h>
-#include <time.h>
-#include "score_manager.h"
 
-#include "print.h"
+#include "score_manager.h"
 
 int score = 0;
 
-void add_score(const int nb_point)
+void add_score(const int nb_point) // ajout les points au score
 {
-	score+= nb_point;
+	score += nb_point;
 }
 
-int return_score(void)
+int return_score(void) // retourne le score actuelle
 {
 	return score;
 }

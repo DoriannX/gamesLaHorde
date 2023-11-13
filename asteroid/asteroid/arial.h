@@ -1,8 +1,6 @@
-#include <SFML/Window.h>
+#ifndef ARIAL_H
+#define ARIAL_H
 #include <SFML/Graphics.h>
-#include <SFML/System.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-sfFont* arial;
+sfFont* arial; // declaration de la variable globale arial
+#endif

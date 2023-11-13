@@ -36,6 +36,9 @@
     <ClCompile Include="spaceship.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="special_attack.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h">
@@ -54,6 +57,9 @@
       <Filter>Fichiers sources</Filter>
     </ClInclude>
     <ClInclude Include="spaceship.h">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="special_attack.h">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
   </ItemGroup>

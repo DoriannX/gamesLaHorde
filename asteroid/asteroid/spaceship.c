@@ -7,7 +7,9 @@
 #include <math.h>
 
 #include "character.h"
+#include "print.h"
 #include "shoot.h"
+#include "special_attack.h"
 
 #define PI 3.141592
 
@@ -144,10 +146,12 @@ void spawn_spaceship(sfRenderWindow* window) {
 		{
 			sfRenderWindow_drawSprite(window, spaceship_small[j].sprite, NULL);
 		}
-		if (collision(window, j, "small"))
+		if (collision(window, j, "small") || (explode(window) && spaceship_average[j/2].little))
 		{
 			spaceship_small[j].position = (sfVector2f){ INFINITY, INFINITY };
 			spaceship_small[j].little = 1;
+			if (j >= 19)
+				explode_reset();
 		}
 	}
 	for (int j = 0; j < 10; j++)
@@ -187,10 +191,12 @@ void spawn_spaceship(sfRenderWindow* window) {
 		{
 			sfRenderWindow_drawSprite(window, spaceship_average[j].sprite, NULL);
 		}
-		if (collision(window, j, "average"))
+		if (collision(window, j, "average") || (explode(window) && spaceship[j / 2].little))
 		{
 			spaceship_average[j].position = (sfVector2f){ INFINITY, INFINITY };
 			spaceship_average[j].little = 1;
+			if (j >= 9)
+				explode_reset();
 		}
 	}
 	for (int i = 0; i < 5; i++)
@@ -221,10 +227,13 @@ void spawn_spaceship(sfRenderWindow* window) {
 			{
 				sfRenderWindow_drawSprite(window, spaceship[i].sprite, NULL);
 			}
-			if (collision(window, i, "big"))
+			print_int((explode(window)), 24, (sfVector2f) { 100, 200 }, sfWhite, window); 
+			if (collision(window, i, "big") || explode(window))
 			{
 				spaceship[i].position = (sfVector2f){ INFINITY, INFINITY };
 				spaceship[i].little = 1;
+				if(i >= 4)
+					explode_reset();
 			}
 		}
 	}

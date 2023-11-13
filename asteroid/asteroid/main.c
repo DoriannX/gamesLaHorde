@@ -9,6 +9,7 @@
 #include "arial.h"
 #include "shoot.h"
 #include "spaceship.h"
+#include "special_attack.h"
 sfVideoMode screenSize;
 sfVideoMode mode;
 // creation des variables
@@ -46,6 +47,7 @@ void init(void) { // initialise les variables
 	beginning = sfClock_create();
 	time_between_shoot = sfClock_create();
 	life_time_shoot = sfClock_create();
+	explode_time = sfClock_create();
 
 }
 

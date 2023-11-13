@@ -7,6 +7,7 @@
 #include "character.h"
 #include "dt.h"
 #include "arial.h"
+#include "gameOver.h"
 #include "shoot.h"
 #include "spaceship.h"
 #include "special_attack.h"
@@ -76,8 +77,9 @@ int main(void) {
 
 		sfRenderWindow_clear(window, sfBlack);
 		delta_time();
-		if (!collision_spaceship())
+		if (!is_game_over())
 		{
+			lose_life(window);
 			shoot(window);
 			move_character(&asteroid, window);
 			spawn_spaceship(window);

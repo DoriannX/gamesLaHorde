@@ -3,6 +3,8 @@
 #include "character.h"
 #include <math.h>
 #include "dt.h"
+#include "gameOver.h"
+#include "spaceship.h"
 
 #define PI 3.141592
 
@@ -70,4 +72,22 @@ void move_character(character* asteroide_move, sfRenderWindow* window) { // depl
 	create_sprite(asteroide_move->sprite, asteroide_move->texture, asteroide_move->origin, asteroide_move->scale, (float)angle, asteroide_move->position);
 	sfRenderWindow_drawSprite(window, asteroide_move->sprite, NULL);
 	sfSprite_setPosition(asteroide_move->sprite, asteroide_move->position);
+}
+
+void lose_life(sfRenderWindow* window)
+{
+	if(collision_spaceship())
+	{
+		if(asteroid.vie > 1)
+		{
+			asteroid.vie--;
+			asteroid.position = (sfVector2f){ (int)1920 / 2, (int)1080 / 2 };
+			asteroid.direction = (sfVector2f){ 0, 0 };
+			reset_pos_spaceship();
+
+		}else
+		{
+			set_game_over();
+		}
+	}
 }

@@ -100,6 +100,38 @@ void create_spaceship(void)
 	}
 }
 
+void reset_pos_spaceship(void)
+{
+	zone_x[0] = get_random_number(-120, 1920 + 120);
+	zone_x[1] = get_random_number(1920, 1920 + 120);
+	zone_x[2] = get_random_number(-120, 1920 + 120);
+	zone_x[3] = get_random_number(-120, 0);
+
+	zone_y[0] = get_random_number(-120, 0);
+	zone_y[1] = get_random_number(-120, 1080 + 120);
+	zone_y[2] = get_random_number(1080, 1080 + 120);
+	zone_y[3] = get_random_number(-120, 1080 + 120);
+
+	const int zone = get_random_number(0, 4);
+
+	for(int i = 0; i<5; i++)
+	{
+		spaceship[i].position = (sfVector2f){ (int)zone_x[zone], (int)zone_y[zone] };
+		sfSprite_setPosition(spaceship[i].sprite, spaceship[i].position);
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		spaceship_average[i].previous_position = spaceship_average[i].position;
+		sfSprite_setPosition(spaceship_average[i].sprite, spaceship_average[i].position);
+	}
+	for (int i = 0; i < 20; i++)
+	{
+		spaceship_small[i].position = spaceship_average[i / 2].position;
+		sfSprite_setPosition(spaceship_small[i].sprite, spaceship_small[i].position);
+	}
+
+}
+
 int created = 0;
 int destroyed = 0;
 int min_to_display_spaceship = 0;

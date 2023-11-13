@@ -1,2 +1,3 @@
-﻿  special_attack.c
+﻿  character.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(15,55): warning C4028: paramètre formel 2 différent de la déclaration
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

@@ -1,7 +1,8 @@
+#ifndef PRINT_H
+#define PRINT_H
 #include <SFML/Graphics.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-void printStr(char* chr, int size, sfVector2f position, sfColor color, sfWindow* window);
-void printInt(int number, int size, sfVector2f position, sfColor color, sfWindow* window);
-void printFloat(float number, int size, sfVector2f position, sfWindow* window);
+void print_str(const char* chr, const int size, const sfVector2f position, const sfColor color, sfRenderWindow* window);
+void print_int(const int number, const int size, const sfVector2f position, const sfColor color, sfRenderWindow* window);
+void print_float(const float number, const int size, const sfVector2f position, sfRenderWindow* window);
+#endif

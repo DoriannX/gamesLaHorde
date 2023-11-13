@@ -1,11 +1,8 @@
-#include <SFML/Window.h>
-#include <SFML/Graphics.h>
+#ifndef DT_H
+#define DT_H
 #include <SFML/System.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 
 int dt;
 sfClock* beginning;
-void deltaTime();
+void delta_time(void);
+#endif

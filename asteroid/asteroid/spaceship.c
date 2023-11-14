@@ -19,6 +19,9 @@ int get_random_number(const int min, const int max) { // creer un nombre random
 }
 int zone_x[4] = { 0 };
 int zone_y[4] = { 0 };
+int spaceship_exploded[5] = { 0 };
+int spaceship_exploded_average[10] = { 0 };
+int spaceship_exploded_little[20] = { 0 };
 void create_spaceship(void) // creer un vaisseau
 {
 	zone_x[0] = get_random_number(-120, 1920 + 120); // lui donne une position random en dehors de ce que le joueur peut voir
@@ -40,6 +43,7 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship[i].previous_position = spaceship[i].position;
 		spaceship[i].scale = (sfVector2f){ .2f, .2f };
 		spaceship[i].speed = (float)2 / 17;
+		spaceship[i].speed_max = spaceship[i].speed * 2;
 		spaceship[i].sprite = sfSprite_create();
 		spaceship[i].texture = sfTexture_createFromFile("sprites/spriteSpaceship.png", NULL);
 		spaceship[i].rotation = get_random_number(0, 360);
@@ -60,6 +64,7 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_average[i].position = spaceship[i / 2].position;
 		spaceship_average[i].scale = (sfVector2f){ .1f, .1f };
 		spaceship_average[i].speed = (float)4 / 17;
+		spaceship_average[i].speed_max = spaceship_average[i].speed * 2;
 		spaceship_average[i].sprite = sfSprite_create();
 		spaceship_average[i].texture = sfTexture_createFromFile("sprites/spriteSpaceship.png", NULL);
 		spaceship_average[i].rotation = get_random_number(0, 360);
@@ -82,6 +87,7 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_small[i].rotation = 0;
 		spaceship_small[i].scale = (sfVector2f){ .05f, .05f };
 		spaceship_small[i].speed = (float)6 / 17;
+		spaceship_small[i].speed_max = spaceship_small[i].speed * 2;
 		spaceship_small[i].sprite = sfSprite_create();
 		spaceship_small[i].texture = sfTexture_createFromFile("sprites/spriteSpaceship.png", NULL);
 		spaceship_small[i].rotation = get_random_number(0, 360);
@@ -97,7 +103,7 @@ void create_spaceship(void) // creer un vaisseau
 	}
 }
 
-void destroy_spaceship(void) // detruit les vaisseaux quand le jeu est fermé
+void destroy_spaceship(void) // detruit les vaisseaux quand le jeu est ferme
 {
 	for(int i = 0; i<20; i++)
 	{
@@ -181,12 +187,19 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 	}
 	for (int j = 0; j < 20; j++)
 	{
+		
 		if (spaceship_average[j / 2].little) // si le vaisseau de taille superieur a ete detruit
 		{
 			if (!spaceship_small[j].little) // et si le vaisseau n'a pas ete detruit
 			{
 				spaceship_small[j].position.x += spaceship_small[j].direction.x * spaceship_small[j].speed * return_dt(); // donne un mouvement dans une direction aleatoire au vaisseau
 				spaceship_small[j].position.y += spaceship_small[j].direction.y * spaceship_small[j].speed * return_dt();
+
+				if(spaceship_small[j].speed <= spaceship_small[j].speed_max) // augmente la vitesse jusqu'a ce qu'il atteigne sa vitesse max
+				{
+					spaceship_small[j].speed *= 1.001f;
+				}
+
 				if (spaceship_small[j].position.x > 1920 + 120) // wrap around
 				{
 					spaceship_small[j].position.x = -120;
@@ -216,12 +229,10 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 		{
 			sfRenderWindow_drawSprite(window, spaceship_small[j].sprite, NULL); // affiche le vaisseau
 		}
-		if (collision(window, j, "small") || (explode(window) && spaceship_average[j / 2].little)) // si le vaisseau a ete touche
+		if (collision(window, j, "small") || (is_exploded() && spaceship_average[j / 2].little)) // si le vaisseau a ete touche
 		{
 			spaceship_small[j].position = (sfVector2f){ INFINITY, INFINITY }; // detruit le vaisseau
 			spaceship_small[j].little = 1;
-			if (j >= 19)
-				explode_reset(); // reset le pouvoir d'explosion
 		}
 	}
 	for (int j = 0; j < 10; j++)
@@ -232,6 +243,12 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 			{
 				spaceship_average[j].position.x += spaceship_average[j].direction.x * spaceship_average[j].speed * return_dt();
 				spaceship_average[j].position.y += spaceship_average[j].direction.y * spaceship_average[j].speed * return_dt();
+
+				if (spaceship_average[j].speed <= spaceship_average[j].speed_max)
+				{
+					spaceship_average[j].speed *= 1.001f;
+				}
+
 				if (spaceship_average[j].position.x > 1920 + 120)
 				{
 					spaceship_average[j].position.x = -120;
@@ -261,20 +278,25 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 		{
 			sfRenderWindow_drawSprite(window, spaceship_average[j].sprite, NULL);
 		}
-		if (collision(window, j, "average") || (explode(window) && spaceship[j / 2].little))
+		if (collision(window, j, "average") || (is_exploded() && spaceship[j / 2].little))
 		{
 			spaceship_average[j].position = (sfVector2f){ INFINITY, INFINITY };
 			spaceship_average[j].little = 1;
-			if (j >= 9)
-				explode_reset();
 		}
 	}
 	for (int i = 0; i < 5; i++)
 	{
+		
 		if (!spaceship[i].little)
 		{
 			spaceship[i].position.x += spaceship[i].direction.x * spaceship[i].speed * return_dt();
 			spaceship[i].position.y += spaceship[i].direction.y * spaceship[i].speed * return_dt();
+
+			if (spaceship[i].speed <= spaceship[i].speed_max)
+			{
+				spaceship[i].speed *= 1.001f;
+			}
+
 			if (spaceship[i].position.x > 1920 + 120)
 			{
 				spaceship[i].position.x = -120;
@@ -297,12 +319,10 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 			{
 				sfRenderWindow_drawSprite(window, spaceship[i].sprite, NULL);
 			}
-			if (collision(window, i, "big") || explode(window))
+			if (collision(window, i, "big") || is_exploded())
 			{
 				spaceship[i].position = (sfVector2f){ INFINITY, INFINITY };
 				spaceship[i].little = 1;
-				if (i >= 4)
-					explode_reset();
 			}
 		}
 	}
@@ -318,13 +338,13 @@ int collision_spaceship(void) // detecte la collision avec l'asteroid
 	// si une collision entre l'asteroide et n'importe quel vaisseau est detecte
 	for (int i = 0; i < 20; i++)
 	{
-		collision_box_small = abs((int)asteroid.position.x - (int)spaceship_small[i].position.x) <= 50 && abs((int)asteroid.position.y - (int)spaceship_small[i].position.y) <= 50;
+		collision_box_small = abs((int)asteroid.position.x - (int)spaceship_small[i].position.x) <= 70 && abs((int)asteroid.position.y - (int)spaceship_small[i].position.y) <= 70;
 		if (collision_box_small)
 			break;
 	}
 	for (int i = 0; i < 10; i++)
 	{
-		collision_box_average = abs((int)asteroid.position.x - (int)spaceship_average[i].position.x) <= 70 && abs((int)asteroid.position.y - (int)spaceship_average[i].position.y) <= 70;
+		collision_box_average = abs((int)asteroid.position.x - (int)spaceship_average[i].position.x) <= 95 && abs((int)asteroid.position.y - (int)spaceship_average[i].position.y) <= 95;
 		if (collision_box_average)
 			break;
 	}

@@ -1,2 +1,3 @@
-﻿  shoot.c
+﻿  menu_start.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.h(9,63): warning C4031: seconde liste de paramètres formels plus longue que la première liste
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

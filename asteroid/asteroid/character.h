@@ -24,5 +24,7 @@ int angle;
 
 void move_character(character* asteroide_move, sfRenderWindow* window);
 void create_sprite(sfSprite* sprite, sfTexture* texture, sfVector2f origin, sfVector2f scale, float rotation, sfVector2f position);
-void update_life();
+void update_life(void);
+int is_can_move(void);
+void set_can_move(const int state);
 #endif

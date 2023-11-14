@@ -67,6 +67,10 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 			if (collision_box[j])//si un projectile touche un vaisseau
 			{
 				add_score(25); // ajout e25 au score
+				if(!is_can_move())
+				{
+					set_can_move(1);
+				}
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position); //ramene le projectile a la position du personnage
 				min_to_display++; // reduit le nombre de projectile a afficher
 				break;
@@ -83,6 +87,10 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 			if (collision_box[j])
 			{
 				add_score(50);
+				if (!is_can_move())
+				{
+					set_can_move(1);
+				}
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
 				min_to_display++;
 				break;
@@ -99,6 +107,10 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 			if (collision_box[j])
 			{
 				add_score(100);
+				if (!is_can_move())
+				{
+					set_can_move(1);
+				}
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
 				min_to_display++;
 				break;

@@ -10,6 +10,7 @@
 #define PI 3.141592
 
 int angle = 360 - 90;
+int can_move = 0;
 
 character asteroid = { // definie la structure asteroid
 	.vie = 3,
@@ -52,7 +53,7 @@ void move_character(character* asteroide_move, sfRenderWindow* window) { // depl
 
 	sfVector2f impulse = { 0, 0 };
 
-	if (sfKeyboard_isKeyPressed(sfKeyUp) || sfKeyboard_isKeyPressed(sfKeyZ)) { // fait avancer le personnage avec de l'inertie
+	if ((sfKeyboard_isKeyPressed(sfKeyUp) || sfKeyboard_isKeyPressed(sfKeyZ)) && is_can_move()) { // fait avancer le personnage avec de l'inertie
 		if (asteroide_move->speed < asteroide_move->speed_max) { // tant que le personnage a une vitese inferieure a la vitesse max
 			impulse.x = (float)cos(angle * PI / 180) * asteroide_move->acceleration * return_dt(); // creer une force a donner a son personnage
 			impulse.y = (float)sin(angle * PI / 180) * asteroide_move->acceleration * return_dt();
@@ -90,14 +91,14 @@ void move_character(character* asteroide_move, sfRenderWindow* window) { // depl
 	sfSprite_setPosition(asteroide_move->sprite, asteroide_move->position);
 }
 
-void update_life() // fait perdre une vie au joueur
+void update_life(void) // fait perdre une vie au joueur
 {
 	if (collision_spaceship())// si le joueur touche un vaisseau
 	{
 		if (asteroid.vie > 1) // si le joueur a toujours une vie
 		{
 			asteroid.vie--; // retire une vie au joueur
-			asteroid.position = (sfVector2f){ (int)1920 / 2, (int)1080 / 2 }; // reset sa position et la force appliquée à celui ci
+			asteroid.position = (sfVector2f){ (int)1920 / 2, (int)1080 / 2 }; // reset sa position et la force appliquee a celui ci
 			asteroid.direction = (sfVector2f){ 0, 0 };
 			reset_pos_spaceship(); // reset la position de tous les vaisseaux
 		}
@@ -106,4 +107,14 @@ void update_life() // fait perdre une vie au joueur
 			set_game_over(); // si le joueur n'a plus de vie, le jeu se met en game over
 		}
 	}
+}
+
+int is_can_move(void)
+{
+	return can_move;
+}
+
+void set_can_move(const int state)
+{
+	can_move = state;
 }

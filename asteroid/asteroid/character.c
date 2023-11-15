@@ -48,7 +48,7 @@ void tuto(sfRenderWindow* window)
 		if(time_tuto < 5)
 		{
 			time_tuto += return_dt()/1000;
-			print_str("You can use your special ability !", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
+			print_str("You can use your special ability ! (risky)", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
 			print_str("EXPLODE : [SHIFT]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
 		}
 	}

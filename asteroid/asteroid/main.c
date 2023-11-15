@@ -83,6 +83,7 @@ int main(void) { // main
 			spawn_spaceship(window); // fait apparaitre des vaisseau 
 			explode(window); // permet au joueur d'utiliser son attaque spe
 			display_uis(window);
+			tuto(window);
 		}
 		sfRenderWindow_display(window);
 	}

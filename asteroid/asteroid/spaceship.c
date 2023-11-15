@@ -22,6 +22,7 @@ int zone_y[4] = { 0 };
 int spaceship_exploded[5] = { 0 };
 int spaceship_exploded_average[10] = { 0 };
 int spaceship_exploded_little[20] = { 0 };
+int difficulty = 0;
 void create_spaceship(void) // creer un vaisseau
 {
 	zone_x[0] = get_random_number(-120, 1920 + 120); // lui donne une position random en dehors de ce que le joueur peut voir
@@ -42,7 +43,12 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship[i].position = (sfVector2f){ (int)zone_x[zone], (int)zone_y[zone] };
 		spaceship[i].previous_position = spaceship[i].position;
 		spaceship[i].scale = (sfVector2f){ .2f, .2f };
-		spaceship[i].speed = (float)2 / 17;
+		switch (difficulty)
+		{
+		case 1: spaceship[i].speed = (float)4 / 17; break;
+		case 2: spaceship[i].speed = (float)8 / 17; break;
+		default: spaceship[i].speed = (float)2 / 17; break;
+		}
 		spaceship[i].speed_max = spaceship[i].speed * 2;
 		spaceship[i].sprite = sfSprite_create();
 		spaceship[i].texture = sfTexture_createFromFile("sprites/spriteSpaceship.png", NULL);
@@ -63,7 +69,12 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_average[i].previous_position = spaceship_average[i].position;
 		spaceship_average[i].position = spaceship[i / 2].position;
 		spaceship_average[i].scale = (sfVector2f){ .1f, .1f };
-		spaceship_average[i].speed = (float)4 / 17;
+		switch (difficulty)
+		{
+		case 1: spaceship_average[i].speed = (float)6 / 17; break;
+		case 2: spaceship_average[i].speed = (float)8 / 17; break;
+		default: spaceship_average[i].speed = (float)4 / 17; break;
+		}
 		spaceship_average[i].speed_max = spaceship_average[i].speed * 2;
 		spaceship_average[i].sprite = sfSprite_create();
 		spaceship_average[i].texture = sfTexture_createFromFile("sprites/spriteSpaceship.png", NULL);
@@ -86,7 +97,12 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_small[i].previous_position = spaceship_small[i].position;
 		spaceship_small[i].rotation = 0;
 		spaceship_small[i].scale = (sfVector2f){ .05f, .05f };
-		spaceship_small[i].speed = (float)6 / 17;
+		switch (difficulty)
+		{
+		case 1: spaceship_small[i].speed = (float)8 / 17; break;
+		case 2: spaceship_small[i].speed = (float)10 / 17; break;
+		default: spaceship_small[i].speed = (float)6 / 17; break;
+		}
 		spaceship_small[i].speed_max = spaceship_small[i].speed * 2;
 		spaceship_small[i].sprite = sfSprite_create();
 		spaceship_small[i].texture = sfTexture_createFromFile("sprites/spriteSpaceship.png", NULL);
@@ -100,6 +116,37 @@ void create_spaceship(void) // creer un vaisseau
 		sfSprite_setRotation(spaceship_small[i].sprite, (float)spaceship_small[i].rotation + 90);
 		sfSprite_setScale(spaceship_small[i].sprite, spaceship_small[i].scale);
 		sfSprite_setTexture(spaceship_small[i].sprite, spaceship_small[i].texture, sfFalse);
+	}
+}
+
+void update_speed(void)
+{
+	for (int i = 0; i < 5; i++)
+	{
+		switch (difficulty)
+		{
+		case 1: spaceship[i].speed = (float)4 / 17; break;
+		case 2: spaceship[i].speed = (float)8 / 17; break;
+		default: spaceship[i].speed = (float)2 / 17; break;
+		}
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		switch (difficulty)
+		{
+		case 1: spaceship_average[i].speed = (float)6 / 17; break;
+		case 2: spaceship_average[i].speed = (float)8 / 17; break;
+		default: spaceship_average[i].speed = (float)4 / 17; break;
+		}
+	}
+	for (int i = 0; i < 20; i++)
+	{
+		switch (difficulty)
+		{
+		case 1: spaceship_small[i].speed = (float)8 / 17; break;
+		case 2: spaceship_small[i].speed = (float)10 / 17; break;
+		default: spaceship_small[i].speed = (float)6 / 17; break;
+		}
 	}
 }
 
@@ -383,4 +430,9 @@ void reset_spaceship(void)
 	created = 0;
 	destroyed = 0;
 	min_to_display_spaceship = 0;
+}
+
+void set_difficulty(const int diff)
+{
+	difficulty = diff;
 }

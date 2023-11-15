@@ -73,6 +73,8 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 				}
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position); //ramene le projectile a la position du personnage
 				min_to_display++; // reduit le nombre de projectile a afficher
+
+				set_tuto(0, 0);
 				break;
 			}
 		}
@@ -93,6 +95,8 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 				}
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
 				min_to_display++;
+
+				set_tuto(0, 0);
 				break;
 			}
 		}
@@ -113,6 +117,8 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 				}
 				sfRectangleShape_setPosition(projectile[i].rectangle, asteroid.position);
 				min_to_display++;
+
+				set_tuto(0, 0);
 				break;
 			}
 		}

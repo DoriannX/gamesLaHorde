@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include "print.h"
 #include "arial.h"
-void print_str(const char* chr, const int size, const sfVector2f position, const sfColor color, sfRenderWindow* window, const sfFont* font = arial) { // affiche un str sur la window
+void print_str(const char* chr, const int size, const sfVector2f position, const sfColor color, sfRenderWindow* window, const sfFont* font) { // affiche un str sur la window
+	font = (font != NULL) ? font : arial;
 	sfText* text = sfText_create(); // creer un texte pour stocker notre str a afficher
 	sfText_setString(text, chr);//transforme le str en text
 	sfText_setFont(text, font); // lui donne une police

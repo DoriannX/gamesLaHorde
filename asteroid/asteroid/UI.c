@@ -19,7 +19,7 @@ sfTexture* cooldown_ability_texture = NULL;
 
 void display_uis(sfRenderWindow* window)
 {
-	print_str("score : ", 24, (sfVector2f) { 1920.0f / 2 - 280, 1080 - 50 }, sfWhite, window);
+	print_str("score : ", 24, (sfVector2f) { 1920.0f / 2 - 280, 1080 - 50 }, sfWhite, window, NULL);
 	print_int(return_score(), 24, (sfVector2f) { 1920.0f/2 - 200, 1080 - 45 }, sfWhite, window);
 	if(!heart_sprite)
 	{

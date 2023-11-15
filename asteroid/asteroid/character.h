@@ -28,4 +28,7 @@ void update_life(void);
 int is_can_move(void);
 void set_can_move(const int state);
 void reset_character(void);
+void tuto(sfRenderWindow* window);
+void set_tuto(const int tuto, const int state);
+
 #endif

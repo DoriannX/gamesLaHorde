@@ -1,10 +1,11 @@
-
+ï»¿
 #include <SFML/Graphics.h>
 #include <stdlib.h>
 #include "character.h"
 #include <math.h>
 #include "dt.h"
 #include "gameOver.h"
+#include "print.h"
 #include "spaceship.h"
 
 #define PI 3.141592
@@ -28,6 +29,35 @@ character asteroid = { // definie la structure asteroid
 	.origin = {1, 1},
 	.rotation = 0
 };
+int tuto_bool[] = { 1, 1, 1 };
+float time_tuto = 0;
+void tuto(sfRenderWindow* window)
+{
+	if(tuto_bool[0])
+	{
+		print_str("Watch out, spaceships are attacking!", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
+		print_str("[Q]/[LEFT] and [D]/[RIGHT]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
+		print_str("SHOOT : [space]", 30, (sfVector2f) { 1920.0f / 2, 400 }, sfWhite, window, NULL);
+	}else if(tuto_bool[1])
+	{
+		print_str("Congrats ! You can now move.", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
+		print_str("MOVE : [z]/[UP]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
+
+	}else if(tuto_bool[2])
+	{
+		if(time_tuto < 5)
+		{
+			time_tuto += return_dt()/1000;
+			print_str("You can use your special ability !", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
+			print_str("EXPLODE : [SHIFT]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
+		}
+	}
+}
+
+void set_tuto(const int tuto, const int state)
+{
+	tuto_bool[tuto] = state;
+}
 
 void create_sprite(sfSprite* sprite, const sfTexture* texture, const sfVector2f origin, const sfVector2f scale, const float rotation, const sfVector2f position) { // initialise un sprite
 	sfSprite_setTexture(sprite, texture, sfTrue);
@@ -54,6 +84,7 @@ void move_character(character* asteroide_move, sfRenderWindow* window) { // depl
 	sfVector2f impulse = { 0, 0 };
 
 	if ((sfKeyboard_isKeyPressed(sfKeyUp) || sfKeyboard_isKeyPressed(sfKeyZ)) && is_can_move()) { // fait avancer le personnage avec de l'inertie
+		tuto_bool[1] = 0;
 		if (asteroide_move->speed < asteroide_move->speed_max) { // tant que le personnage a une vitese inferieure a la vitesse max
 			impulse.x = (float)cos(angle * PI / 180) * asteroide_move->acceleration * return_dt(); // creer une force a donner a son personnage
 			impulse.y = (float)sin(angle * PI / 180) * asteroide_move->acceleration * return_dt();
@@ -86,7 +117,7 @@ void move_character(character* asteroide_move, sfRenderWindow* window) { // depl
 	if (asteroide_move->position.y < -120) {
 		asteroide_move->position.y = 1080 + 120;
 	}
-	create_sprite(asteroide_move->sprite, asteroide_move->texture, asteroide_move->origin, asteroide_move->scale, (float)angle, asteroide_move->position); // applique tous les changements au sprite pour l'actualiser à l'écran
+	create_sprite(asteroide_move->sprite, asteroide_move->texture, asteroide_move->origin, asteroide_move->scale, (float)angle, asteroide_move->position); // applique tous les changements au sprite pour l'actualiser Ã  l'Ã©cran
 	sfRenderWindow_drawSprite(window, asteroide_move->sprite, NULL);
 	sfSprite_setPosition(asteroide_move->sprite, asteroide_move->position);
 }
@@ -118,6 +149,7 @@ void set_can_move(const int state)
 {
 	can_move = state;
 }
+
 
 void reset_character(void)
 {

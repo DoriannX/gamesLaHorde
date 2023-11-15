@@ -44,7 +44,6 @@ void explode(sfRenderWindow* window) // attaque special
 {
 	if(explode_time)
 	{
-
 		if (sfKeyboard_isKeyPressed(sfKeyLShift) && sfTime_asSeconds(sfClock_getElapsedTime(explode_time)) >= 60) { // pouvoir se reset toutes les 60 secondes
 			animate = 1;
 			alpha_special_attack = 255;
@@ -58,6 +57,7 @@ void explode(sfRenderWindow* window) // attaque special
 	}else if(first_entry)
 	{
 		if (sfKeyboard_isKeyPressed(sfKeyLShift) && first_entry) { // le temps de recharge se lance la premiere fois que le joueur appuie
+			set_tuto(2, 0);
 			explode_time = sfClock_create();
 			first_entry = 0;
 			animate = 1;

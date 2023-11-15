@@ -253,19 +253,20 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 					if(i == 0)
 					{
 						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250, pos_diff[i].y });
-						//easy
+						set_difficulty(0);
+						update_speed();
 					}
 					if(i == 1)
 					{
 						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250, pos_diff[i].y });
-
-						//balanced
+						set_difficulty(1);
+						update_speed();
 					}
 					if(i==2)
 					{
 						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250, pos_diff[i].y });
-
-						//hard
+						set_difficulty(2);
+						update_speed();
 					}
 					if(i==3)
 					{

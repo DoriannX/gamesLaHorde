@@ -11,5 +11,7 @@ int collision_spaceship(void);
 void reset_pos_spaceship(void);
 void destroy_spaceship(void);
 void reset_spaceship(void);
+void set_difficulty(const int diff);
+void update_speed(void);
 
 #endif

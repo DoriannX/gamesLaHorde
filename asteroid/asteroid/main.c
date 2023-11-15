@@ -9,11 +9,13 @@
 #include "dt.h"
 #include "arial.h"
 #include "gameOver.h"
+#include "menu_start.h"
 #include "print.h"
 #include "score_manager.h"
 #include "shoot.h"
 #include "spaceship.h"
 #include "special_attack.h"
+#include "UI.h"
 sfVideoMode screen_size;
 sfVideoMode mode;
 // creation des variables
@@ -36,12 +38,12 @@ void init(void) { // initialise les variables
 	beginning = sfClock_create();
 	time_between_shoot = sfClock_create();
 	life_time_shoot = sfClock_create();
-	explode_time = sfClock_create();
+
 
 	mode.width = screen_size.width; // donne a la fenetre la taille de l'ecran
 	mode.height = screen_size.height;
 	mode.bitsPerPixel = 32;
-	window = sfRenderWindow_create(mode, "Asteroid", sfFullscreen, NULL); // creer une window
+	window = sfRenderWindow_create(mode, "Asteroid", sfClose, NULL); // creer une window
 	sfRenderWindow_setFramerateLimit(window, 60); // limite les fps a 60
 }
 
@@ -56,6 +58,8 @@ void destroy(void) { // detruit tous les sprites, textures, clock etc
 	sfClock_destroy(beginning);
 	destroy_projectile();
 	destroy_spaceship();
+	destroy_animation();
+	destroy_uis();
 }
 
 int main(void) { // main
@@ -69,13 +73,16 @@ int main(void) { // main
 
 		sfRenderWindow_clear(window, sfBlack);
 		delta_time(); // actualise le delta temps
-		if (!is_game_over()) // si la partie n'est pas perdu
+		// on affiche le menu
+		display_menu(window, event);
+		if (!is_game_over() && is_started() && !return_is_paused()) // si la partie n'est pas perdu
 		{
 			update_life(); // actualise les vies
-			shoot(window); // permet au joueur de tirer 
+			shoot(window); // permet au joueur de tirer
 			move_character(&asteroid, window); // deplace le personnage
 			spawn_spaceship(window); // fait apparaitre des vaisseau 
-			print_int(return_score(), 24, (sfVector2f) { 100, 100 }, sfWhite, window);
+			explode(window); // permet au joueur d'utiliser son attaque spe
+			display_uis(window);
 		}
 		sfRenderWindow_display(window);
 	}

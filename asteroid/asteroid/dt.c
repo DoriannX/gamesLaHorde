@@ -15,3 +15,10 @@ float return_dt(void) // retourne le dt en temps reel
 {
 	return dt;
 }
+
+void reset_dt(void)
+{
+	previous_frame = (sfTime){ 0 };
+	now = (sfTime){ 0 };
+	dt = 0;
+}

@@ -12,3 +12,8 @@ int return_score(void) // retourne le score actuelle
 {
 	return score;
 }
+
+void reset_score(void)
+{
+	score = 0;
+}

@@ -134,22 +134,26 @@
     <ClCompile Include="dt.c" />
     <ClCompile Include="gameOver.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="menu_start.c" />
     <ClCompile Include="print.c" />
     <ClCompile Include="score_manager.c" />
     <ClCompile Include="shoot.c" />
     <ClCompile Include="spaceship.c" />
     <ClCompile Include="special_attack.c" />
+    <ClCompile Include="UI.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arial.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="dt.h" />
     <ClInclude Include="gameOver.h" />
+    <ClInclude Include="menu_start.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="score_manager.h" />
     <ClInclude Include="shoot.h" />
     <ClInclude Include="spaceship.h" />
     <ClInclude Include="special_attack.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

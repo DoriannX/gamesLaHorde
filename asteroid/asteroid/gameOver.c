@@ -12,3 +12,8 @@ int is_game_over(void)
 {
 	return game_over; // retourne si le jeu est en etat de game over ou pas
 }
+
+void reset_game_over(void)
+{
+	game_over = 0;
+}

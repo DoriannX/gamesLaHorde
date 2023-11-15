@@ -5,4 +5,5 @@
 sfClock* beginning;
 void delta_time(void);
 float return_dt(void);
+void reset_dt(void);
 #endif

@@ -10,5 +10,6 @@ character spaceship_small[20];
 int collision_spaceship(void);
 void reset_pos_spaceship(void);
 void destroy_spaceship(void);
+void reset_spaceship(void);
 
 #endif

@@ -42,6 +42,12 @@
     <ClCompile Include="score_manager.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="UI.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="menu_start.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h">
@@ -69,6 +75,12 @@
       <Filter>Fichiers sources</Filter>
     </ClInclude>
     <ClInclude Include="score_manager.h">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="menu_start.h">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
   </ItemGroup>

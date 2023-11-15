@@ -360,3 +360,27 @@ int collision_spaceship(void) // detecte la collision avec l'asteroid
 	}
 	return collided_spaceship;
 }
+
+void reset_spaceship(void)
+{
+	for(int i = 0; i<4; i++)
+	{
+		zone_x[i] = 0 ;
+		zone_y[i] = 0 ;
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		spaceship_exploded[i] = 0;
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		spaceship_exploded_average[i] = 0;
+	}
+	for (int i = 0; i < 20; i++)
+	{
+		spaceship_exploded_little[i] = 0;
+	}
+	created = 0;
+	destroyed = 0;
+	min_to_display_spaceship = 0;
+}

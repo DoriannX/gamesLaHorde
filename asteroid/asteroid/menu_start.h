@@ -7,5 +7,7 @@
 int is_menu_displayed(void);
 void display_menu(sfRenderWindow* window);
 void display_menu(sfRenderWindow* window, const sfEvent event);
+int is_started(void);
+int return_is_paused(void);
 
 #endif

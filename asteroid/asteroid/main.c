@@ -73,23 +73,16 @@ int main(void) { // main
 
 		sfRenderWindow_clear(window, sfBlack);
 		delta_time(); // actualise le delta temps
-		if(is_menu_displayed()) // si le menu doit etre affiche
+		// on affiche le menu
+		display_menu(window, event);
+		if (!is_game_over() && is_started() && !return_is_paused()) // si la partie n'est pas perdu
 		{
-			// on affiche le menu
-			display_menu(window, event);
-
-		}
-		else // sinon il y a le jeu
-		{
-			if (!is_game_over()) // si la partie n'est pas perdu
-			{
-				update_life(); // actualise les vies
-				shoot(window); // permet au joueur de tirer
-				move_character(&asteroid, window); // deplace le personnage
-				spawn_spaceship(window); // fait apparaitre des vaisseau 
-				explode(window); // permet au joueur d'utiliser son attaque spe
-				display_uis(window);
-			}
+			update_life(); // actualise les vies
+			shoot(window); // permet au joueur de tirer
+			move_character(&asteroid, window); // deplace le personnage
+			spawn_spaceship(window); // fait apparaitre des vaisseau 
+			explode(window); // permet au joueur d'utiliser son attaque spe
+			display_uis(window);
 		}
 		sfRenderWindow_display(window);
 	}

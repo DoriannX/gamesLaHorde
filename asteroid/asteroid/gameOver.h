@@ -4,5 +4,5 @@
 
 void set_game_over(void);
 int is_game_over(void);
-
+void reset_game_over(void);
 #endif

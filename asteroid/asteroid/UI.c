@@ -84,3 +84,12 @@ void destroy_uis(void)
 	sfSprite_destroy(cooldown_ability);
 	sfTexture_destroy(cooldown_ability_texture);
 }
+
+void reset_uis(void)
+{
+	heart_sprite = NULL;
+	cooldown_ability = NULL;
+	heart_texture = NULL;
+	heart_texture_death = NULL;
+	cooldown_ability_texture = NULL;
+}

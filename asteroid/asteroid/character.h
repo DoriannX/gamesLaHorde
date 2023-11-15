@@ -27,4 +27,5 @@ void create_sprite(sfSprite* sprite, sfTexture* texture, sfVector2f origin, sfVe
 void update_life(void);
 int is_can_move(void);
 void set_can_move(const int state);
+void reset_character(void);
 #endif

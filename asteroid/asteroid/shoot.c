@@ -24,7 +24,7 @@ typedef struct {
 	float rotation;
 }object;
 
-object projectile[10];
+object projectile[10] = {0};
 
 int nb_projectile = 0;
 int min_to_display = 1;
@@ -166,4 +166,26 @@ void shoot(sfRenderWindow* window) { // permet au joueur de tirer
 		sfRectangleShape_setPosition(projectile[i].rectangle, projectile[i].position); //actualise le tout sur la window
 		sfRenderWindow_drawRectangleShape(window, projectile[i].rectangle, NULL);
 	}
+}
+
+void reset_shoot(void)
+{
+	for(int i = 0; i< 10; i++)
+	{
+		projectile[i].position = (sfVector2f){ 0, 0 };
+		projectile[i].rectangle = NULL;
+		projectile[i].speed = 0;
+		projectile[i].direction = (sfVector2f){0, 0};
+		projectile[i].bounds = (sfVector2f){ 0, 0 };
+		projectile[i].color = sfWhite;
+		projectile[i].origin = (sfVector2f){ 0, 0 };
+		projectile[i].previous_position = (sfVector2f){ 0, 0, };
+		projectile[i].rotation = 0;
+	}
+
+	nb_projectile = 0;
+	min_to_display = 1;
+	sfClock_restart(life_time_shoot);
+	sfClock_restart(time_between_shoot);
+	
 }

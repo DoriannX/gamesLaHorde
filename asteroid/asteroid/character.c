@@ -118,3 +118,24 @@ void set_can_move(const int state)
 {
 	can_move = state;
 }
+
+void reset_character(void)
+{
+	angle = 360 - 90;
+	can_move = 0;
+	asteroid.sprite = sfSprite_create();
+	asteroid.texture = sfTexture_createFromFile("sprites/spriteAsteroid.png", NULL);
+	asteroid.sprite_size = (sfVector2f){ 1024, 1024 };
+	asteroid.origin = (sfVector2f){ asteroid.sprite_size.x / 2, asteroid.sprite_size.y / 2 };
+	asteroid.position.x = 1920.0f/2; asteroid.position.y = 1080.0f/2;
+	asteroid.vie = 3;
+	asteroid.previous_position = (sfVector2f){ (float)1920 / 2, (float)1080 / 2 };
+	asteroid.speed = 0;
+	asteroid.speed_max = 0.5f;
+	asteroid.acceleration = .01f;
+	asteroid.deceleration = .99f;
+	asteroid.direction = (sfVector2f){ 0, 0 };
+	asteroid.scale = (sfVector2f){ 0.15f, 0.15f };
+	asteroid.rotation = 0;
+	create_sprite(asteroid.sprite, asteroid.texture, asteroid.origin, asteroid.scale, -90, asteroid.position);
+}

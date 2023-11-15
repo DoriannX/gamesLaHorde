@@ -98,3 +98,13 @@ int is_animating(void)
 {
 	return animate;
 }
+
+void reset_special_attack(void)
+{
+	exploded = 0;
+	animate = 0;
+	alpha_special_attack = 255;
+	animation_rectangle = NULL;
+	explode_time = NULL;
+	first_entry = 1;
+}

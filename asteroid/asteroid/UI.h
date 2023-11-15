@@ -4,5 +4,6 @@
 
 void display_uis(sfRenderWindow* window);
 void destroy_uis(void);
+void reset_uis(void);
 
 #endif

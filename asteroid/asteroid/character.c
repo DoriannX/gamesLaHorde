@@ -29,7 +29,7 @@ character asteroid = { // definie la structure asteroid
 	.origin = {1, 1},
 	.rotation = 0
 };
-int tuto_bool[] = { 1, 1, 1 };
+int tuto_bool[] = { 1, 1, 1, 1 };
 float time_tuto = 0;
 void tuto(sfRenderWindow* window)
 {
@@ -45,9 +45,17 @@ void tuto(sfRenderWindow* window)
 
 	}else if(tuto_bool[2])
 	{
-		if(time_tuto < 5)
+		print_str("you can pause the game.", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
+		print_str("PAUSE : [ESCAPE]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
+		if(sfKeyboard_isKeyPressed(sfKeyEscape))
 		{
-			time_tuto += return_dt()/1000;
+			tuto_bool[2] = 0;
+		}
+	}else if(tuto_bool[3])
+	{
+		if (time_tuto < 5)
+		{
+			time_tuto += return_dt() / 1000;
 			print_str("You can use your special ability ! (risky)", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
 			print_str("EXPLODE : [SHIFT]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
 		}

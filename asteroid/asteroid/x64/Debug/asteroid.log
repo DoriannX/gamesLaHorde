@@ -1,3 +1,13 @@
 ﻿  character.c
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(62,55): warning C4028: paramètre formel 2 différent de la déclaration
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\character.c(70,55): warning C4028: paramètre formel 2 différent de la déclaration
+  spaceship.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(45,52): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(45,71): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(206,52): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(206,71): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(213,61): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(213,80): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(226,59): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(226,78): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+  Génération de code en cours...
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

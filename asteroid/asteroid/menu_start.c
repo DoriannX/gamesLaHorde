@@ -22,6 +22,7 @@ int logo_displayed = 1;
 int title_displayed = 0;
 int selection_displayed = 0;
 int option_displayed = 0;
+int history_displayed = 0;
 int last_menu = 0;
 int is_paused = 0;
 sfSprite* menu_sprite = NULL;
@@ -102,9 +103,26 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 			previous_click = actual_click;
 			alpha_title = 255;
 			sfSprite_setColor(menu_sprite, (sfColor){ 255, 255, 255, (sfUint8)alpha_title });
-			selection_displayed = 1;
 			title_displayed = 0;
+			history_displayed = 1;
 			menu_texture = NULL;
+		}
+	}
+
+	if(history_displayed)
+	{
+		print_str("You play as Mr. Roid who has a peaceful life with his wife and two children in a galaxy far,\n"
+			" far away when one day a spaceship decimates his entire family but accidentally leaves him alive.\n"
+			" Mr. Roid, filled with hatred, decides to rush towards the ship and explode it. \n"
+			"With the weapon he retrieves from it, Mr. Roid sets out on a quest to kill all the spaceships in the universe. \n"
+			"To do this he must recover what he needs to move faster...\n", 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 }, sfWhite, window, NULL);
+			print_str(" > CLICK WHEN FINISHED <" , 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2+300 }, sfWhite, window, NULL);
+		if((actual_click && !previous_click))
+		{
+			previous_click = actual_click;
+			history_displayed = 0;
+			alpha_title = 255;
+			selection_displayed = 1;
 		}
 	}
 	if(selection_displayed)

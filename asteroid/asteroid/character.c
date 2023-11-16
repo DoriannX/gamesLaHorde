@@ -7,6 +7,7 @@
 #include "gameOver.h"
 #include "print.h"
 #include "spaceship.h"
+#include "scale.h"
 
 #define PI 3.141592
 
@@ -35,18 +36,18 @@ void tuto(sfRenderWindow* window)
 {
 	if(tuto_bool[0])
 	{
-		print_str("Watch out, spaceships are attacking!", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
-		print_str("[Q]/[LEFT] and [D]/[RIGHT]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
-		print_str("SHOOT : [space]", 30, (sfVector2f) { 1920.0f / 2, 400 }, sfWhite, window, NULL);
+		print_str("Watch out, spaceships are attacking!", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x , 200* scale_y }, sfWhite, window, NULL);
+		print_str("[Q]/[LEFT] and [D]/[RIGHT]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
+		print_str("SHOOT : [space]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 400* scale_y }, sfWhite, window, NULL);
 	}else if(tuto_bool[1])
 	{
-		print_str("Congrats ! You can now move.", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
-		print_str("MOVE : [z]/[UP]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
+		print_str("Congrats ! You can now move.", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
+		print_str("MOVE : [z]/[UP]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
 
 	}else if(tuto_bool[2])
 	{
-		print_str("you can pause the game.", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
-		print_str("PAUSE : [ESCAPE]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
+		print_str("you can pause the game.", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
+		print_str("PAUSE : [ESCAPE]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
 		if(sfKeyboard_isKeyPressed(sfKeyEscape))
 		{
 			tuto_bool[2] = 0;
@@ -56,8 +57,8 @@ void tuto(sfRenderWindow* window)
 		if (time_tuto < 5)
 		{
 			time_tuto += return_dt() / 1000;
-			print_str("You can use your special ability ! (risky)", 30, (sfVector2f) { 1920.0f / 2, 200 }, sfWhite, window, NULL);
-			print_str("EXPLODE : [SHIFT]", 30, (sfVector2f) { 1920.0f / 2, 300 }, sfWhite, window, NULL);
+			print_str("You can use your special ability ! (risky)", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
+			print_str("EXPLODE : [SHIFT]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
 		}
 	}
 }
@@ -112,18 +113,18 @@ void move_character(character* asteroide_move, sfRenderWindow* window) { // depl
 
 	asteroide_move->speed = (float)(sqrt(pow(asteroide_move->previous_position.x - asteroide_move->position.x, 2) + pow(asteroide_move->previous_position.y - asteroide_move->position.y, 2))) / return_dt(); // calcule de la vitesse en temps reel du personnage
 
-	if (asteroide_move->position.x > 1920 + 120) { // wrap around
-		asteroide_move->position.x = -120;
+	if (asteroide_move->position.x > (1920 + 120) * scale_x) { // wrap around
+		asteroide_move->position.x = (-120) * scale_x;
 	}
-	if (asteroide_move->position.x < -120) {
-		asteroide_move->position.x = 1920 + 120;
+	if (asteroide_move->position.x < ( - 120) * scale_x) {
+		asteroide_move->position.x = (1920 + 120) * scale_x;
 	}
 
-	if (asteroide_move->position.y > 1080 + 120) {
-		asteroide_move->position.y = -120;
+	if (asteroide_move->position.y > (1080 + 120)* scale_y) {
+		asteroide_move->position.y = (-120) * scale_y;
 	}
-	if (asteroide_move->position.y < -120) {
-		asteroide_move->position.y = 1080 + 120;
+	if (asteroide_move->position.y < ( - 120) * scale_y) {
+		asteroide_move->position.y = (1080 + 120) * scale_y;
 	}
 	create_sprite(asteroide_move->sprite, asteroide_move->texture, asteroide_move->origin, asteroide_move->scale, (float)angle, asteroide_move->position); // applique tous les changements au sprite pour l'actualiser à l'écran
 	sfRenderWindow_drawSprite(window, asteroide_move->sprite, NULL);
@@ -137,7 +138,7 @@ void update_life(void) // fait perdre une vie au joueur
 		if (asteroid.vie > 1) // si le joueur a toujours une vie
 		{
 			asteroid.vie--; // retire une vie au joueur
-			asteroid.position = (sfVector2f){ (int)1920 / 2, (int)1080 / 2 }; // reset sa position et la force appliquee a celui ci
+			asteroid.position = (sfVector2f){( 1920.0f / 2) * scale_x,( 1080.0f / 2) * scale_y }; // reset sa position et la force appliquee a celui ci
 			asteroid.direction = (sfVector2f){ 0, 0 };
 			reset_pos_spaceship(); // reset la position de tous les vaisseaux
 		}
@@ -167,15 +168,15 @@ void reset_character(void)
 	asteroid.texture = sfTexture_createFromFile("sprites/spriteAsteroid.png", NULL);
 	asteroid.sprite_size = (sfVector2f){ 1024, 1024 };
 	asteroid.origin = (sfVector2f){ asteroid.sprite_size.x / 2, asteroid.sprite_size.y / 2 };
-	asteroid.position.x = 1920.0f/2; asteroid.position.y = 1080.0f/2;
+	asteroid.position.x = (1920.0f/2)* scale_x; asteroid.position.y = (1080.0f/2)* scale_y;
 	asteroid.vie = 3;
-	asteroid.previous_position = (sfVector2f){ (float)1920 / 2, (float)1080 / 2 };
+	asteroid.previous_position = (sfVector2f){ (1920.0f / 2) * scale_x, (1080.0f / 2) * scale_y };
 	asteroid.speed = 0;
-	asteroid.speed_max = 0.5f;
+	asteroid.speed_max = 0.5f * scale_x;
 	asteroid.acceleration = .01f;
 	asteroid.deceleration = .99f;
 	asteroid.direction = (sfVector2f){ 0, 0 };
-	asteroid.scale = (sfVector2f){ 0.15f, 0.15f };
+	asteroid.scale = (sfVector2f){ 0.15f * scale_x, 0.15f * scale_y };
 	asteroid.rotation = 0;
 	create_sprite(asteroid.sprite, asteroid.texture, asteroid.origin, asteroid.scale, -90, asteroid.position);
 }

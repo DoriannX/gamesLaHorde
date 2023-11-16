@@ -51,6 +51,12 @@
     <ClCompile Include="level_manager.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="scale.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="map.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h">
@@ -87,6 +93,12 @@
       <Filter>Fichiers sources</Filter>
     </ClInclude>
     <ClInclude Include="level_manager.h">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="scale.h">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
   </ItemGroup>

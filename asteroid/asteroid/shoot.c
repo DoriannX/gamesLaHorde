@@ -7,6 +7,7 @@
 #include "shoot.h"
 #include "character.h"
 #include "dt.h"
+#include "scale.h"
 #include "score_manager.h"
 #include "spaceship.h"
 
@@ -34,10 +35,10 @@ void create_projectile(void) { // creer des projectiles
 	}
 	nb_projectile++; // incremente le nombre de projectile
 	projectile[nb_projectile].color = sfWhite; // creer les projectiles
-	projectile[nb_projectile].bounds.x = 15;
-	projectile[nb_projectile].bounds.y = 5;
+	projectile[nb_projectile].bounds.x = 15 * scale_x;
+	projectile[nb_projectile].bounds.y = 5 * scale_y;
 	projectile[nb_projectile].rectangle = sfRectangleShape_create();
-	projectile[nb_projectile].speed = (float)20/17;
+	projectile[nb_projectile].speed = ((float)20/17) * scale_x;
 	projectile[nb_projectile].rotation = (float)angle;
 	projectile[nb_projectile].direction.x = (float)cos(angle * PI / 180);
 	projectile[nb_projectile].direction.y = (float)sin(angle * PI / 180);
@@ -63,7 +64,7 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 		int collision_box[5] = { 0 };
 		for (int i = min_to_display; i <= nb_projectile; i++) // tous les vaisseaux
 		{
-			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship[j].position.x) <= 100 && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship[j].position.y) <= 100;
+			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship[j].position.x) <= 100 * scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship[j].position.y) <= 100 * scale_y;
 			if (collision_box[j])//si un projectile touche un vaisseau
 			{
 				add_score(25); // ajout e25 au score
@@ -85,7 +86,7 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 		int collision_box[10] = { 0 };
 		for (int i = min_to_display; i <= nb_projectile; i++)
 		{
-			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_average[j].position.x) <= 50 && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_average[j].position.y) <= 50;
+			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_average[j].position.x) <= 60 * scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_average[j].position.y) <= 60 * scale_y;
 			if (collision_box[j])
 			{
 				add_score(50);
@@ -107,7 +108,7 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 		int collision_box[20] = { 0 };
 		for (int i = min_to_display; i <= nb_projectile; i++)
 		{
-			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_small[j].position.x) <= 15 && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_small[j].position.y) <= 15;
+			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_small[j].position.x) <= 25 * scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_small[j].position.y) <= 25 * scale_y;
 			if (collision_box[j])
 			{
 				add_score(100);
@@ -138,7 +139,7 @@ void shoot(sfRenderWindow* window) { // permet au joueur de tirer
 		}
 	}
 	if (sfKeyboard_isKeyPressed(sfKeySpace)) {
-		if (sfTime_asSeconds(sfClock_getElapsedTime(time_between_shoot)) > .5f) { // le joueur peut tirer un projectile toutes les 0.5 seconde
+		if (sfTime_asSeconds(sfClock_getElapsedTime(time_between_shoot)) > .3f) { // le joueur peut tirer un projectile toutes les 0.5 seconde
 			if (nb_projectile - min_to_display == -1) {
 				sfClock_restart(life_time_shoot);
 			}
@@ -156,18 +157,18 @@ void shoot(sfRenderWindow* window) { // permet au joueur de tirer
 	for (int i = min_to_display; i <= nb_projectile; i++) {
 		projectile[i].position.x += projectile[i].speed * projectile[i].direction.x * return_dt(); 
 		projectile[i].position.y += projectile[i].speed * projectile[i].direction.y * return_dt();
-		if (projectile[i].position.x > 1920 + 120) { // wrap around
-			projectile[i].position.x = -120;
+		if (projectile[i].position.x > (1920 + 120) * scale_x) { // wrap around
+			projectile[i].position.x = (-120) * scale_x;
 		}
-		if (projectile[i].position.x < -120) {
-			projectile[i].position.x = 1920 + 120;
+		if (projectile[i].position.x < (-120) * scale_x) {
+			projectile[i].position.x = (1920 + 120) * scale_x;
 		}
 
-		if (projectile[i].position.y > 1080 + 120) {
-			projectile[i].position.y = -120;
+		if (projectile[i].position.y > (1080 + 120) * scale_y) {
+			projectile[i].position.y = (-120) * scale_y;
 		}
-		if (projectile[i].position.y < -120) {
-			projectile[i].position.y = 1080 + 120;
+		if (projectile[i].position.y <( -120) * scale_y) {
+			projectile[i].position.y = (1080 + 120) * scale_y;
 		}
 		sfRectangleShape_setPosition(projectile[i].rectangle, projectile[i].position); //actualise le tout sur la window
 		sfRenderWindow_drawRectangleShape(window, projectile[i].rectangle, NULL);

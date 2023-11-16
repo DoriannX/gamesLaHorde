@@ -45,7 +45,7 @@ int is_menu_displayed(void)
 {
 	return menu_displayed;
 }
-
+int next = 0;
 void display_menu(sfRenderWindow* window, const sfEvent event)
 {
 	actual_click = sfMouse_isButtonPressed(sfMouseLeft);
@@ -108,17 +108,26 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 			menu_texture = NULL;
 		}
 	}
-
+	
 	if(history_displayed)
 	{
 		print_str("You play as Mr. Roid who has a peaceful life with his wife and two children in a galaxy far,\n"
 			" far away when one day a spaceship decimates his entire family but accidentally leaves him alive.\n"
 			" Mr. Roid, filled with hatred, decides to rush towards the ship and explode it. \n"
 			"With the weapon he retrieves from it, Mr. Roid sets out on a quest to kill all the spaceships in the universe. \n"
-			"To do this he must recover what he needs to move faster...\n", 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 }, sfWhite, window, NULL);
-			print_str(" > CLICK WHEN FINISHED <" , 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2+300 }, sfWhite, window, NULL);
+			"To do this he must recover what he needs to move faster...\n", 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 }, (sfColor) { 255, 255, 255, (sfUint8)alpha_title }, window, NULL);
+			print_str(" > CLICK WHEN FINISHED <" , 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2+300 }, (sfColor) { 255, 255, 255, (sfUint8)alpha_title }, window, NULL);
 		if((actual_click && !previous_click))
 		{
+			next = 1;
+		}
+		if(next)
+		{
+			alpha_title -= 2.0f;
+		}
+		if(alpha_title <=0)
+		{
+
 			previous_click = actual_click;
 			history_displayed = 0;
 			alpha_title = 255;

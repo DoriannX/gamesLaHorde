@@ -135,8 +135,10 @@
     <ClCompile Include="gameOver.c" />
     <ClCompile Include="level_manager.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="map.c" />
     <ClCompile Include="menu_start.c" />
     <ClCompile Include="print.c" />
+    <ClCompile Include="scale.c" />
     <ClCompile Include="score_manager.c" />
     <ClCompile Include="shoot.c" />
     <ClCompile Include="spaceship.c" />
@@ -149,8 +151,10 @@
     <ClInclude Include="dt.h" />
     <ClInclude Include="gameOver.h" />
     <ClInclude Include="level_manager.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="menu_start.h" />
     <ClInclude Include="print.h" />
+    <ClInclude Include="scale.h" />
     <ClInclude Include="score_manager.h" />
     <ClInclude Include="shoot.h" />
     <ClInclude Include="spaceship.h" />

@@ -8,6 +8,7 @@
 
 #include "character.h"
 #include "print.h"
+#include "scale.h"
 
 int exploded = 0;
 int animate = 0;
@@ -21,9 +22,9 @@ void animation(sfRenderWindow* window) // fait une petite animation quand la cap
 	if (!animation_rectangle)
 	{
 		animation_rectangle = sfRectangleShape_create();
-		sfRectangleShape_setOrigin(animation_rectangle, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 });
-		sfRectangleShape_setPosition(animation_rectangle, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 });
-		sfRectangleShape_setSize(animation_rectangle, (sfVector2f) { 1920.0f, 1080.0f });
+		sfRectangleShape_setOrigin(animation_rectangle, (sfVector2f) { (1920.0f / 2)* scale_x, (1080.0f / 2)* scale_y });
+		sfRectangleShape_setPosition(animation_rectangle, (sfVector2f) { (1920.0f / 2)* scale_x, (1080.0f / 2)* scale_y });
+		sfRectangleShape_setSize(animation_rectangle, (sfVector2f) {( 1920.0f)* scale_x, (1080.0f) * scale_y});
 		sfRectangleShape_setFillColor(animation_rectangle, sfWhite);
 	}
 	if(alpha_special_attack > 0)

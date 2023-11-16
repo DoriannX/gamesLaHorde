@@ -11,6 +11,7 @@
 #include "dt.h"
 #include "level_manager.h"
 #include "print.h"
+#include "scale.h"
 #include "shoot.h"
 #include "special_attack.h"
 
@@ -27,15 +28,15 @@ int spaceship_exploded_little[20] = { 0 };
 int difficulty = 0;
 void create_spaceship(void) // creer un vaisseau
 {
-	zone_x[0] = get_random_number(-120, 1920 + 120); // lui donne une position random en dehors de ce que le joueur peut voir
-	zone_x[1] = get_random_number(1920, 1920 + 120);
-	zone_x[2] = get_random_number(-120, 1920 + 120);
-	zone_x[3] = get_random_number(-120, 0);
+	zone_x[0] = get_random_number((-120) * scale_x, (1920 + 120) * scale_x); // lui donne une position random en dehors de ce que le joueur peut voir
+	zone_x[1] = get_random_number(1920 * scale_x, (1920 + 120) * scale_x);
+	zone_x[2] = get_random_number((-120) * scale_x, (1920 + 120) * scale_x);
+	zone_x[3] = get_random_number((-120) * scale_x, 0);
 
-	zone_y[0] = get_random_number(-120, 0);
-	zone_y[1] = get_random_number(-120, 1080 + 120);
-	zone_y[2] = get_random_number(1080, 1080 + 120);
-	zone_y[3] = get_random_number(-120, 1080 + 120);
+	zone_y[0] = get_random_number((-120) * scale_y, 0);
+	zone_y[1] = get_random_number((-120) * scale_y, (1080 + 120) * scale_y);
+	zone_y[2] = get_random_number(1080 * scale_y, (1080 + 120) * scale_y);
+	zone_y[3] = get_random_number((-120) * scale_y, (1080 + 120) * scale_y);
 
 	const int zone = get_random_number(0, 4);
 
@@ -44,14 +45,14 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship[i].origin = (sfVector2f){ 1, 1 }; // creer un gros vaisseau
 		spaceship[i].position = (sfVector2f){ (int)zone_x[zone], (int)zone_y[zone] };
 		spaceship[i].previous_position = spaceship[i].position;
-		spaceship[i].scale = (sfVector2f){ .2f, .2f };
+		spaceship[i].scale = (sfVector2f){ .2f * scale_x, .2f * scale_y };
 		if(!is_leveling())
 		{
 			switch (difficulty)
 			{
-			case 1: spaceship[i].speed = (float)4 / 17; break;
-			case 2: spaceship[i].speed = (float)8 / 17; break;
-			default: spaceship[i].speed = (float)2 / 17; break;
+			case 1: spaceship[i].speed = (4.0f / 17) * scale_x; break;
+			case 2: spaceship[i].speed = (8.0f / 17) * scale_x; break;
+			default: spaceship[i].speed = (2.0f / 17) * scale_x; break;
 			}
 		}
 		spaceship[i].speed_max = spaceship[i].speed * 2;
@@ -73,14 +74,14 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_average[i].origin = (sfVector2f){ 1, 1 }; // creer un vaisseau de taille moyenne
 		spaceship_average[i].previous_position = spaceship_average[i].position;
 		spaceship_average[i].position = spaceship[i / 2].position;
-		spaceship_average[i].scale = (sfVector2f){ .1f, .1f };
+		spaceship_average[i].scale = (sfVector2f){ .15f * scale_x, .15f* scale_y };
 		if(!is_leveling())
 		{
 			switch (difficulty)
 			{
-			case 1: spaceship_average[i].speed = (float)6 / 17; break;
-			case 2: spaceship_average[i].speed = (float)8 / 17; break;
-			default: spaceship_average[i].speed = (float)4 / 17; break;
+			case 1: spaceship_average[i].speed = (6.0f / 17) * scale_x; break;
+			case 2: spaceship_average[i].speed = (8.0f / 17) * scale_x; break;
+			default: spaceship_average[i].speed = (4.0f / 17) * scale_x; break;
 			}
 		}
 		spaceship_average[i].speed_max = spaceship_average[i].speed * 2;
@@ -104,14 +105,14 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_small[i].position = spaceship_average[i / 2].position;
 		spaceship_small[i].previous_position = spaceship_small[i].position;
 		spaceship_small[i].rotation = 0;
-		spaceship_small[i].scale = (sfVector2f){ .05f, .05f };
+		spaceship_small[i].scale = (sfVector2f){ .1f * scale_x, .1f * scale_y };
 		if(!is_leveling())
 		{
 			switch (difficulty)
 			{
-			case 1: spaceship_small[i].speed = (float)8 / 17; break;
-			case 2: spaceship_small[i].speed = (float)10 / 17; break;
-			default: spaceship_small[i].speed = (float)6 / 17; break;
+			case 1: spaceship_small[i].speed = (8.0f / 17) * scale_x; break;
+			case 2: spaceship_small[i].speed = (10.0f / 17) * scale_x; break;
+			default: spaceship_small[i].speed = (6.0f / 17) * scale_x; break;
 			}
 		}
 		spaceship_small[i].speed_max = spaceship_small[i].speed * 2;
@@ -136,18 +137,18 @@ void update_speed(void)
 	{
 		switch (difficulty)
 		{
-		case 1: spaceship[i].speed = (float)4 / 17; spaceship[i].speed_max = spaceship[i].speed * 2; break;
-		case 2: spaceship[i].speed = (float)8 / 17; spaceship[i].speed_max = spaceship[i].speed * 2; break;
-		default: spaceship[i].speed = (float)2 / 17; spaceship[i].speed_max = spaceship[i].speed * 2; break;
+		case 1: spaceship[i].speed = (4.0f / 17) * scale_x; spaceship[i].speed_max = spaceship[i].speed * 2; break;
+		case 2: spaceship[i].speed = (6.0f / 17) * scale_x; spaceship[i].speed_max = spaceship[i].speed * 2; break;
+		default: spaceship[i].speed = (2.0f / 17) * scale_x; spaceship[i].speed_max = spaceship[i].speed * 2; break;
 		}
 	}
 	for (int i = 0; i < 10; i++)
 	{
 		switch (difficulty)
 		{
-		case 1: spaceship_average[i].speed = (float)6 / 17; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
-		case 2: spaceship_average[i].speed = (float)8 / 17; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
-		default: spaceship_average[i].speed = (float)4 / 17; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
+		case 1: spaceship_average[i].speed = (6.0f / 17) * scale_x; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
+		case 2: spaceship_average[i].speed =( 8.0f / 17) * scale_x; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
+		default: spaceship_average[i].speed = (4.0f / 17) * scale_x; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
 
 		}
 	}
@@ -155,9 +156,9 @@ void update_speed(void)
 	{
 		switch (difficulty)
 		{
-		case 1: spaceship_small[i].speed = (float)8 / 17; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
-		case 2: spaceship_small[i].speed = (float)10 / 17; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
-		default: spaceship_small[i].speed = (float)6 / 17; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
+		case 1: spaceship_small[i].speed = (8.0f / 17) * scale_x; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
+		case 2: spaceship_small[i].speed = (10.0f / 17) * scale_x; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
+		default: spaceship_small[i].speed = (6.0f / 17) * scale_x; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
 		}
 	}
 }
@@ -189,15 +190,15 @@ void destroy_spaceship(void) // detruit les vaisseaux quand le jeu est ferme
 
 void reset_pos_spaceship(void) // reset la position de tous les vaisseaux
 {
-	zone_x[0] = get_random_number(-120, 1920 + 120);
-	zone_x[1] = get_random_number(1920, 1920 + 120);
-	zone_x[2] = get_random_number(-120, 1920 + 120);
-	zone_x[3] = get_random_number(-120, 0);
+	zone_x[0] = get_random_number((-120) * scale_x,( 1920 + 120) * scale_x);
+	zone_x[1] = get_random_number(1920 * scale_x,( 1920 + 120) * scale_x);
+	zone_x[2] = get_random_number((-120) * scale_x, (1920 + 120) * scale_x);
+	zone_x[3] = get_random_number((-120) * scale_x, 0);
 
-	zone_y[0] = get_random_number(-120, 0);
-	zone_y[1] = get_random_number(-120, 1080 + 120);
-	zone_y[2] = get_random_number(1080, 1080 + 120);
-	zone_y[3] = get_random_number(-120, 1080 + 120);
+	zone_y[0] = get_random_number((-120) * scale_y, 0);
+	zone_y[1] = get_random_number((-120) * scale_y, (1080 + 120) * scale_y);
+	zone_y[2] = get_random_number((1080) * scale_y, (1080 + 120) * scale_y);
+	zone_y[3] = get_random_number((-120) * scale_y, (1080 + 120) * scale_y);
 
 	const int zone = get_random_number(0, 4);
 
@@ -263,22 +264,22 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 					spaceship_small[j].speed *= 1.001f;
 				}
 
-				if (spaceship_small[j].position.x > 1920 + 120) // wrap around
+				if (spaceship_small[j].position.x > (1920 + 120) * scale_x) // wrap around
 				{
-					spaceship_small[j].position.x = -120;
+					spaceship_small[j].position.x = (-120) * scale_x;
 				}
-				if (spaceship_small[j].position.x < -120)
+				if (spaceship_small[j].position.x < (-120) * scale_x)
 				{
-					spaceship_small[j].position.x = 1920 + 120;
+					spaceship_small[j].position.x = (1920 + 120) * scale_x;
 				}
 
-				if (spaceship_small[j].position.y > 1080 + 120)
+				if (spaceship_small[j].position.y > (1080 + 120) * scale_y)
 				{
-					spaceship_small[j].position.y = -120;
+					spaceship_small[j].position.y = (-120) * scale_y;
 				}
-				if (spaceship_small[j].position.y < -120)
+				if (spaceship_small[j].position.y < (-120) * scale_y)
 				{
-					spaceship_small[j].position.y = 1080 + 120;
+					spaceship_small[j].position.y = (1080 + 120) * scale_y;
 				}
 				sfSprite_setPosition(spaceship_small[j].sprite, spaceship_small[j].position); // actualise sur la window
 			}
@@ -313,22 +314,22 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 					spaceship_average[j].speed *= 1.001f;
 				}
 
-				if (spaceship_average[j].position.x > 1920 + 120)
+				if (spaceship_average[j].position.x > (1920 + 120) * scale_x)
 				{
-					spaceship_average[j].position.x = -120;
+					spaceship_average[j].position.x = (-120) * scale_x;
 				}
-				if (spaceship_average[j].position.x < -120)
+				if (spaceship_average[j].position.x < (-120) * scale_x)
 				{
-					spaceship_average[j].position.x = 1920 + 120;
+					spaceship_average[j].position.x = (1920 + 120) * scale_x;
 				}
 
-				if (spaceship_average[j].position.y > 1080 + 120)
+				if (spaceship_average[j].position.y > (1080 + 120) * scale_y)
 				{
-					spaceship_average[j].position.y = -120;
+					spaceship_average[j].position.y = (-120) * scale_y;
 				}
-				if (spaceship_average[j].position.y < -120)
+				if (spaceship_average[j].position.y < (-120) * scale_y)
 				{
-					spaceship_average[j].position.y = 1080 + 120;
+					spaceship_average[j].position.y = (1080 + 120) * scale_y;
 				}
 				sfSprite_setPosition(spaceship_average[j].sprite, spaceship_average[j].position);
 			}
@@ -361,22 +362,22 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 				spaceship[i].speed *= 1.001f;
 			}
 
-			if (spaceship[i].position.x > 1920 + 120)
+			if (spaceship[i].position.x > (1920 + 120) * scale_x)
 			{
-				spaceship[i].position.x = -120;
+				spaceship[i].position.x = (-120) * scale_x;
 			}
-			if (spaceship[i].position.x < -120)
+			if (spaceship[i].position.x < (-120) * scale_x)
 			{
-				spaceship[i].position.x = 1920 + 120;
+				spaceship[i].position.x = (1920 + 120) * scale_x;
 			}
 
-			if (spaceship[i].position.y > 1080 + 120)
+			if (spaceship[i].position.y > (1080 + 120) * scale_y)
 			{
-				spaceship[i].position.y = -120;
+				spaceship[i].position.y = (-120) * scale_y;
 			}
-			if (spaceship[i].position.y < -120)
+			if (spaceship[i].position.y <( -120) * scale_y)
 			{
-				spaceship[i].position.y = 1080 + 120;
+				spaceship[i].position.y = (1080 + 120) * scale_y;
 			}
 			sfSprite_setPosition(spaceship[i].sprite, spaceship[i].position);
 			if (!spaceship[i].little)
@@ -402,19 +403,19 @@ int collision_spaceship(void) // detecte la collision avec l'asteroid
 	// si une collision entre l'asteroide et n'importe quel vaisseau est detecte
 	for (int i = 0; i < 20; i++)
 	{
-		collision_box_small = abs((int)asteroid.position.x - (int)spaceship_small[i].position.x) <= 70 && abs((int)asteroid.position.y - (int)spaceship_small[i].position.y) <= 70;
+		collision_box_small = abs((int)asteroid.position.x - (int)spaceship_small[i].position.x) <= 70 * scale_x && abs((int)asteroid.position.y - (int)spaceship_small[i].position.y) <= 70 * scale_y;
 		if (collision_box_small)
 			break;
 	}
 	for (int i = 0; i < 10; i++)
 	{
-		collision_box_average = abs((int)asteroid.position.x - (int)spaceship_average[i].position.x) <= 95 && abs((int)asteroid.position.y - (int)spaceship_average[i].position.y) <= 95;
+		collision_box_average = abs((int)asteroid.position.x - (int)spaceship_average[i].position.x) <= 95 * scale_x && abs((int)asteroid.position.y - (int)spaceship_average[i].position.y) <= 95 * scale_y;
 		if (collision_box_average)
 			break;
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		collision_box_big = abs((int)asteroid.position.x - (int)spaceship[i].position.x) <= 130 && abs((int)asteroid.position.y - (int)spaceship[i].position.y) <= 130;
+		collision_box_big = abs((int)asteroid.position.x - (int)spaceship[i].position.x) <= 130 * scale_x && abs((int)asteroid.position.y - (int)spaceship[i].position.y) <= 130 * scale_y;
 		if (collision_box_big)
 			break;
 	}
@@ -438,7 +439,7 @@ void reset_spaceship(void)
 	{
 		if (is_leveling())
 		{
-			spaceship[i].speed += 2.0f/17;
+			spaceship[i].speed += (2.0f/17) * scale_x;
 			spaceship[i].speed_max = spaceship[i].speed * 2;
 		}
 		spaceship_exploded[i] = 0;
@@ -447,7 +448,7 @@ void reset_spaceship(void)
 	{
 		if (is_leveling())
 		{
-			spaceship_average[i].speed += 2.0f / 17;
+			spaceship_average[i].speed += (2.0f / 17) * scale_x;
 			spaceship_average[i].speed_max = spaceship[i].speed * 2;
 		}
 		spaceship_exploded_average[i] = 0;
@@ -456,7 +457,7 @@ void reset_spaceship(void)
 	{
 		if (is_leveling())
 		{
-			spaceship_small[i].speed += 2.0f / 17;
+			spaceship_small[i].speed += (2.0f / 17) * scale_x;
 			spaceship_small[i].speed_max = spaceship[i].speed * 2;
 		}
 		spaceship_exploded_little[i] = 0;

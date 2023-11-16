@@ -12,6 +12,7 @@
 #include "dt.h"
 #include "gameOver.h"
 #include "print.h"
+#include "scale.h"
 #include "score_manager.h"
 #include "shoot.h"
 #include "spaceship.h"
@@ -54,10 +55,10 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 	{
 		menu_sprite = sfSprite_create();
 		menu_texture = sfTexture_createFromFile("sprites/laHorde.png", NULL);
-		create_sprite(menu_sprite, menu_texture, (sfVector2f) { 482.0f / 2, 486.0f / 2 }, (sfVector2f) { 1.0f, 1.0f }, 0, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 });
+		create_sprite(menu_sprite, menu_texture, (sfVector2f) { 482.0f / 2, 486.0f / 2 }, (sfVector2f) { (1.0f)* scale_x, 1.0f* scale_y }, 0, (sfVector2f) { (1920.0f / 2)* scale_x,( 1080.0f / 2)* scale_y });
 		selection_arrow_sprite = sfSprite_create();
 		selection_arrow_texture = sfTexture_createFromFile("sprites/selection_arrow.png", NULL);
-		create_sprite(selection_arrow_sprite, selection_arrow_texture, (sfVector2f) { 512.0f / 2, 512.0f / 2 }, (sfVector2f) { .1f, .1f }, 0, (sfVector2f) { 1920.0f / 2+250, 1080.0f / 2 - 320 + 150 });
+		create_sprite(selection_arrow_sprite, selection_arrow_texture, (sfVector2f) { 512.0f / 2, 512.0f / 2 }, (sfVector2f) { .1f * scale_x, .1f* scale_y }, 0, (sfVector2f) { (1920.0f / 2+250)* scale_x, (1080.0f / 2 - 320 + 150)* scale_y });
 	}
 	if(logo_displayed)
 	{
@@ -83,13 +84,13 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 		{
 			menu_sprite = sfSprite_create();
 			menu_texture = sfTexture_createFromFile("sprites/titleScreen.png", NULL);
-			create_sprite(menu_sprite, menu_texture, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 }, (sfVector2f) { 1.0f, 1.0f }, 0, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 });
+			create_sprite(menu_sprite, menu_texture, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 }, (sfVector2f) { 1.0f * scale_x, 1.0f* scale_y }, 0, (sfVector2f) {( 1920.0f / 2)* scale_x, (1080.0f / 2)* scale_y });
 		}
 		const sfColor title_color = { 255, 255, 255, (sfUint8)alpha_title };
 		sfSprite_setColor(menu_sprite, title_color);
 		sfRenderWindow_drawSprite(window, menu_sprite, NULL);
 		alien = (alien) ? alien : sfFont_createFromFile("fonts/alien.ttf");
-		print_str("sdioretsa", 200, (sfVector2f) { 1920.0f / 2,1080- 200 }, title_color, window, alien);
+		print_str("sdioretsa", (int)(200 * scale_x), (sfVector2f) { (1920.0f / 2)* scale_x,(1080- 200)* scale_y }, title_color, window, alien);
 		if (alpha_title < 255)
 		{
 			alpha_title += 2.0f;
@@ -115,8 +116,8 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 			" far away when one day a spaceship decimates his entire family but accidentally leaves him alive.\n"
 			" Mr. Roid, filled with hatred, decides to rush towards the ship and explode it. \n"
 			"With the weapon he retrieves from it, Mr. Roid sets out on a quest to kill all the spaceships in the universe. \n"
-			"To do this he must recover what he needs to move faster...\n", 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2 }, (sfColor) { 255, 255, 255, (sfUint8)alpha_title }, window, NULL);
-			print_str(" > CLICK WHEN FINISHED <" , 24, (sfVector2f) { 1920.0f / 2, 1080.0f / 2+300 }, (sfColor) { 255, 255, 255, (sfUint8)alpha_title }, window, NULL);
+			"To do this he must recover what he needs to move faster...\n", 24 * scale_x, (sfVector2f) { (1920.0f / 2)* scale_x, (1080.0f / 2 )* scale_y}, (sfColor) { 255, 255, 255, (sfUint8)alpha_title }, window, NULL);
+			print_str(" > CLICK WHEN FINISHED <" , 24 * scale_x, (sfVector2f) { (1920.0f / 2)* scale_x, (1080.0f / 2+300)* scale_y }, (sfColor) { 255, 255, 255, (sfUint8)alpha_title }, window, NULL);
 		if((actual_click && !previous_click))
 		{
 			next = 1;
@@ -146,14 +147,14 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 		{
 			sfRectangleShape_setFillColor(list_button[i], (sfColor) { 255, 255, 255, 100 });
 			sfRectangleShape_setOrigin(list_button[i], (sfVector2f) { sfRectangleShape_getSize(start_button).x / 2, sfRectangleShape_getSize(start_button).y / 2 });
-			sfRectangleShape_setPosition(list_button[i], (sfVector2f) { 1920.0f / 2, 1080.0f / 2 - 150 + 150.0f*(float)i });
-			sfRectangleShape_setScale(list_button[i], (sfVector2f) { 1.0f, 1.0f });
-			sfRectangleShape_setSize(list_button[i], (sfVector2f) { 420, 100 });
+			sfRectangleShape_setPosition(list_button[i], (sfVector2f) { (1920.0f / 2)* scale_x, (1080.0f / 2 - 150 + 150.0f*(float)i)* scale_y });
+			sfRectangleShape_setScale(list_button[i], (sfVector2f) { (1.0f), 1.0f });
+			sfRectangleShape_setSize(list_button[i], (sfVector2f) { (420)* scale_x, 100* scale_y });
 		}
 		sfRenderWindow_drawSprite(window, menu_sprite, NULL);
 
-		if((float)sfMouse_getPositionRenderWindow(window).x < 1920.0f/2+210 && (float)sfMouse_getPositionRenderWindow(window).x > 1920.0f / 2 - 210
-			&& (float)sfMouse_getPositionRenderWindow(window).y < 1080.0f / 2-150 + 50 && (float)sfMouse_getPositionRenderWindow(window).y > 1080.0f / 2-150 - 50)
+		if((float)sfMouse_getPositionRenderWindow(window).x < (1920.0f/2+210) * scale_x && (float)sfMouse_getPositionRenderWindow(window).x > (1920.0f / 2 - 210) * scale_x
+			&& (float)sfMouse_getPositionRenderWindow(window).y < (1080.0f / 2-150 + 50) * scale_y && (float)sfMouse_getPositionRenderWindow(window).y > (1080.0f / 2-150 - 50) * scale_y)
 		{
 			sfRenderWindow_drawRectangleShape(window, start_button, NULL);
 			if(actual_click && !previous_click)
@@ -165,8 +166,8 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 				clock_beginning = sfClock_create();
 			}
 		}
-		if ((float)sfMouse_getPositionRenderWindow(window).x < 1920.0f / 2 + 210 && (float)sfMouse_getPositionRenderWindow(window).x > 1920.0f / 2 - 210
-			&& (float)sfMouse_getPositionRenderWindow(window).y < 1080.0f / 2 + 50 && (float)sfMouse_getPositionRenderWindow(window).y > 1080.0f / 2- 50)
+		if ((float)sfMouse_getPositionRenderWindow(window).x < (1920.0f / 2 + 210) * scale_x && (float)sfMouse_getPositionRenderWindow(window).x > (1920.0f / 2 - 210) * scale_x
+			&& (float)sfMouse_getPositionRenderWindow(window).y < (1080.0f / 2 + 50) * scale_y && (float)sfMouse_getPositionRenderWindow(window).y > (1080.0f / 2- 50) * scale_y)
 		{
 			sfRenderWindow_drawRectangleShape(window, option_button, NULL);
 			if (actual_click && !previous_click)
@@ -178,8 +179,8 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 				last_menu = 0;
 			}
 		}
-		if ((float)sfMouse_getPositionRenderWindow(window).x < 1920.0f / 2 + 210 && (float)sfMouse_getPositionRenderWindow(window).x > 1920.0f / 2 - 210
-			&& (float)sfMouse_getPositionRenderWindow(window).y < 1080.0f / 2 + 150 + 50 && (float)sfMouse_getPositionRenderWindow(window).y > 1080.0f / 2 + 150 - 50)
+		if ((float)sfMouse_getPositionRenderWindow(window).x < (1920.0f / 2 + 210) * scale_x && (float)sfMouse_getPositionRenderWindow(window).x > (1920.0f / 2 - 210) * scale_x
+			&& (float)sfMouse_getPositionRenderWindow(window).y < (1080.0f / 2 + 150 + 50) * scale_y && (float)sfMouse_getPositionRenderWindow(window).y > (1080.0f / 2 + 150 - 50) * scale_y)
 		{
 			sfRenderWindow_drawRectangleShape(window, quit_button, NULL);
 			if (actual_click && !previous_click)
@@ -189,9 +190,9 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 			}
 		}
 
-		print_str("start", 70, sfRectangleShape_getPosition(start_button), sfBlack, window, alien);
-		print_str("option", 70, sfRectangleShape_getPosition(option_button), sfBlack, window, alien);
-		print_str("quit", 70, sfRectangleShape_getPosition(quit_button), sfBlack, window, alien);
+		print_str("start", 70 * scale_x, sfRectangleShape_getPosition(start_button), sfBlack, window, alien);
+		print_str("option", 70 * scale_x, sfRectangleShape_getPosition(option_button), sfBlack, window, alien);
+		print_str("quit", 70 * scale_x, sfRectangleShape_getPosition(quit_button), sfBlack, window, alien);
 	}
 
 	if (!menu_displayed && is_paused && !option_displayed)
@@ -207,19 +208,19 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 		sfSprite_setTexture(menu_sprite, menu_texture, 0);
 		sfRenderWindow_drawSprite(window, menu_sprite, NULL);
 
-		const sfVector2f pos_btnp[] = { { 1920.0f / 2, 1080.0f / 2 - 75 },  { 1920.0f / 2, 1080.0f / 2 + 75} };
-		print_str("option", 50, pos_btnp[0], sfWhite, window, alien);
-		print_str("quit", 50, pos_btnp[1], sfWhite, window, alien);
+		const sfVector2f pos_btnp[] = { { (1920.0f / 2) * scale_x, (1080.0f / 2 - 75) * scale_y },  { (1920.0f / 2) * scale_x, (1080.0f / 2 + 75) * scale_y} };
+		print_str("option", 50 * scale_x, pos_btnp[0], sfWhite, window, alien);
+		print_str("quit", 50 * scale_x, pos_btnp[1], sfWhite, window, alien);
 
 		sfRectangleShape* diff = sfRectangleShape_create();
 		sfRectangleShape_setFillColor(diff, (sfColor) { 255, 255, 255, 100 });
 		sfRectangleShape_setOrigin(diff, (sfVector2f) { sfRectangleShape_getSize(start_button).x / 2, sfRectangleShape_getSize(start_button).y / 2 });
-		sfRectangleShape_setScale(diff, (sfVector2f) { 1.0f, 1.0f });
-		sfRectangleShape_setSize(diff, (sfVector2f) { 420, 100 });
+		sfRectangleShape_setScale(diff, (sfVector2f) { 1.0f * scale_x, 1.0f* scale_y });
+		sfRectangleShape_setSize(diff, (sfVector2f) { 420 * scale_x, 100* scale_y });
 		for(int i = 0; i<2; i++)
 		{
-			if ((float)sfMouse_getPositionRenderWindow(window).x < pos_btnp[i].x + 210 && (float)sfMouse_getPositionRenderWindow(window).x > pos_btnp[i].x - 210
-				&& (float)sfMouse_getPositionRenderWindow(window).y < pos_btnp[i].y + 50 && (float)sfMouse_getPositionRenderWindow(window).y > pos_btnp[i].y - 50)
+			if ((float)sfMouse_getPositionRenderWindow(window).x < pos_btnp[i].x + 210 * scale_x && (float)sfMouse_getPositionRenderWindow(window).x > (pos_btnp[i].x - 210) * scale_x
+				&& (float)sfMouse_getPositionRenderWindow(window).y < pos_btnp[i].y + 50 * scale_y && (float)sfMouse_getPositionRenderWindow(window).y > pos_btnp[i].y - 50 * scale_y)
 			{
 				sfRectangleShape_setPosition(diff, pos_btnp[i]);
 				sfRenderWindow_drawRectangleShape(window, diff, NULL);
@@ -255,21 +256,21 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 		menu_texture = (menu_texture) ? menu_texture : sfTexture_createFromFile("sprites/option_menu.png", NULL);
 		sfSprite_setTexture(menu_sprite, menu_texture, 0);
 		sfRenderWindow_drawSprite(window, menu_sprite, NULL);
-		const sfVector2f pos_diff[] = { {1920.0f / 2, 1080.0f / 2 - 320 + 150}, {1920.0f / 2, 1080.0f / 2 - 320 + 300},  {1920.0f / 2, 1080.0f / 2 - 320 + 450},  {1920.0f / 2, 1080.0f / 2 - 320 + 600} };
-		print_str("difficulte", 100, (sfVector2f) {1920.0f/2, 1080.0f/2-320}, sfWhite, window, alien);
-		print_str("noob", 70, pos_diff[0], sfWhite, window, alien);
-		print_str("balanced", 70, pos_diff[1], sfWhite, window, alien);
-		print_str("pro", 70, pos_diff[2], sfWhite, window, alien);
-		print_str("back", 50, pos_diff[3], sfWhite, window, alien);
+		const sfVector2f pos_diff[] = { {(1920.0f / 2) * scale_x, (1080.0f / 2 - 320 + 150) * scale_y}, {(1920.0f / 2) * scale_x, (1080.0f / 2 - 320 + 300) * scale_y},  {(1920.0f / 2) * scale_x, (1080.0f / 2 - 320 + 450) * scale_y},  {(1920.0f / 2) * scale_x, (1080.0f / 2 - 320 + 600) * scale_y} };
+		print_str("difficulte", 100 * scale_x, (sfVector2f) {(1920.0f/2)* scale_x, (1080.0f/2-320)* scale_y}, sfWhite, window, alien);
+		print_str("noob", 70 * scale_x, pos_diff[0], sfWhite, window, alien);
+		print_str("balanced", 70 * scale_x, pos_diff[1], sfWhite, window, alien);
+		print_str("pro", 70 * scale_x, pos_diff[2], sfWhite, window, alien);
+		print_str("back", 50 * scale_x, pos_diff[3], sfWhite, window, alien);
 		sfRectangleShape* diff = sfRectangleShape_create();
 		sfRectangleShape_setFillColor(diff, (sfColor) { 255, 255, 255, 100 });
 		sfRectangleShape_setOrigin(diff, (sfVector2f) { sfRectangleShape_getSize(start_button).x / 2, sfRectangleShape_getSize(start_button).y / 2 });
-		sfRectangleShape_setScale(diff, (sfVector2f) { 1.0f, 1.0f });
-		sfRectangleShape_setSize(diff, (sfVector2f) { 420, 100 });
+		sfRectangleShape_setScale(diff, (sfVector2f) { 1.0f * scale_x, 1.0f* scale_y });
+		sfRectangleShape_setSize(diff, (sfVector2f) { 420 * scale_x, 100* scale_y });
 		for(int i = 0; i<4; i++)
 		{
-			if ((float)sfMouse_getPositionRenderWindow(window).x < pos_diff[i].x + 210 && (float)sfMouse_getPositionRenderWindow(window).x > pos_diff[i].x - 210
-				&& (float)sfMouse_getPositionRenderWindow(window).y < pos_diff[i].y + 50 && (float)sfMouse_getPositionRenderWindow(window).y > pos_diff[i].y - 50)
+			if ((float)sfMouse_getPositionRenderWindow(window).x < pos_diff[i].x + 210 * scale_x && (float)sfMouse_getPositionRenderWindow(window).x > pos_diff[i].x - 210 * scale_x
+				&& (float)sfMouse_getPositionRenderWindow(window).y < pos_diff[i].y + 50 * scale_y && (float)sfMouse_getPositionRenderWindow(window).y > pos_diff[i].y - 50 * scale_y)
 			{
 				sfRectangleShape_setPosition(diff, pos_diff[i]);
 				sfRenderWindow_drawRectangleShape(window, diff, NULL);
@@ -279,19 +280,19 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 					previous_click = actual_click;
 					if(i == 0)
 					{
-						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250, pos_diff[i].y });
+						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250* scale_x, pos_diff[i].y });
 						set_difficulty(0);
 						update_speed();
 					}
 					if(i == 1)
 					{
-						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250, pos_diff[i].y });
+						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250* scale_x, pos_diff[i].y });
 						set_difficulty(1);
 						update_speed();
 					}
 					if(i==2)
 					{
-						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250, pos_diff[i].y });
+						sfSprite_setPosition(selection_arrow_sprite, (sfVector2f) { pos_diff[i].x + 250* scale_x, pos_diff[i].y });
 						set_difficulty(2);
 						update_speed();
 					}
@@ -320,27 +321,27 @@ void display_menu(sfRenderWindow* window, const sfEvent event)
 		menu_texture = (menu_texture) ? menu_texture : sfTexture_createFromFile("sprites/game_over_menu.png", NULL);
 		sfSprite_setTexture(menu_sprite, menu_texture, 0);
 		sfRenderWindow_drawSprite(window, menu_sprite, NULL);
-		print_int(return_score(), 40, (sfVector2f) { 1920.0f / 2-140, 1080.0f / 2-200 }, sfWhite, window);
-		print_str("pts", 40, (sfVector2f) { 1920.0f / 2-80, 1080.0f / 2-195 }, sfWhite, window, NULL);
+		print_int(return_score(), 40 * scale_x, (sfVector2f) { (1920.0f / 2 - 80)* scale_x, (1080.0f / 2-200)* scale_y }, sfWhite, window);
+		print_str("pts", 40 * scale_x, (sfVector2f) { (1920.0f / 2 - 170)* scale_x, (1080.0f / 2-195)* scale_y }, sfWhite, window, NULL);
 
 		time_since_beginning = (time_since_beginning == 0.0f) ? sfTime_asSeconds(sfClock_getElapsedTime(clock_beginning)) : time_since_beginning;
 
-		print_int((int)time_since_beginning, 40, (sfVector2f) { 1920.0f / 2 + 100, 1080.0f / 2 - 200 }, sfWhite, window);
-		print_str("secs", 40, (sfVector2f) { 1920.0f / 2 + 170, 1080.0f / 2 - 210 }, sfWhite, window, NULL);
+		print_int((int)time_since_beginning, 40 * scale_x, (sfVector2f) { (1920.0f / 2 + 170)* scale_x, (1080.0f / 2 - 200)* scale_y }, sfWhite, window);
+		print_str("secs", 40 * scale_x, (sfVector2f) { (1920.0f / 2 + 100)* scale_x, (1080.0f / 2 - 210)* scale_y }, sfWhite, window, NULL);
 
-		const sfVector2f pos_btn[] = {{1920.0f/2, 1080.0f/2}, {1920.0f / 2, 1080.0f / 2+150} };
+		const sfVector2f pos_btn[] = {{(1920.0f/2) * scale_x, (1080.0f/2) * scale_y}, {(1920.0f / 2) * scale_x, (1080.0f / 2+150) * scale_y} };
 
-		print_str("restart", 50, pos_btn[0], sfWhite, window, alien);
-		print_str("quit", 50, pos_btn[1], sfWhite, window, alien);
+		print_str("restart", 50 * scale_x, pos_btn[0], sfWhite, window, alien);
+		print_str("quit", 50 * scale_x, pos_btn[1], sfWhite, window, alien);
 		sfRectangleShape* diff = sfRectangleShape_create();
 		sfRectangleShape_setFillColor(diff, (sfColor) { 255, 255, 255, 100 });
 		sfRectangleShape_setOrigin(diff, (sfVector2f) { sfRectangleShape_getSize(start_button).x / 2, sfRectangleShape_getSize(start_button).y / 2 });
-		sfRectangleShape_setScale(diff, (sfVector2f) { 1.0f, 1.0f });
-		sfRectangleShape_setSize(diff, (sfVector2f) { 420, 100 });
+		sfRectangleShape_setScale(diff, (sfVector2f) { 1.0f * scale_x, 1.0f* scale_y });
+		sfRectangleShape_setSize(diff, (sfVector2f) { 420 * scale_x, 100* scale_y });
 		for (int i = 0; i < 2; i++)
 		{
-			if ((float)sfMouse_getPositionRenderWindow(window).x < pos_btn[i].x + 210 && (float)sfMouse_getPositionRenderWindow(window).x > pos_btn[i].x - 210
-				&& (float)sfMouse_getPositionRenderWindow(window).y < pos_btn[i].y + 50 && (float)sfMouse_getPositionRenderWindow(window).y > pos_btn[i].y - 50)
+			if ((float)sfMouse_getPositionRenderWindow(window).x < pos_btn[i].x + 210 * scale_x && (float)sfMouse_getPositionRenderWindow(window).x > pos_btn[i].x - 210 * scale_x
+				&& (float)sfMouse_getPositionRenderWindow(window).y < pos_btn[i].y + 50 * scale_y && (float)sfMouse_getPositionRenderWindow(window).y > pos_btn[i].y - 50 * scale_y)
 			{
 				sfRectangleShape_setPosition(diff, pos_btn[i]);
 				sfRenderWindow_drawRectangleShape(window, diff, NULL);

@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 #include <SFML/Window.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
@@ -9,28 +10,32 @@
 #include "dt.h"
 #include "arial.h"
 #include "gameOver.h"
+#include "map.h"
 #include "menu_start.h"
 #include "print.h"
+#include "scale.h"
 #include "score_manager.h"
 #include "shoot.h"
 #include "spaceship.h"
 #include "special_attack.h"
 #include "UI.h"
-sfVideoMode screen_size;
+#include "scale.h"
 sfVideoMode mode;
 // creation des variables
 
 sfRenderWindow* window;
 
 void init(void) { // initialise les variables
+
+	init_scale();
 	srand(time(NULL));
-	screen_size = sfVideoMode_getDesktopMode();
 
 	asteroid.sprite = sfSprite_create();
 	asteroid.texture = sfTexture_createFromFile("sprites/spriteAsteroid.png", NULL);
 	asteroid.sprite_size = (sfVector2f){ 1024, 1024 };
 	asteroid.origin = (sfVector2f){ asteroid.sprite_size.x / 2, asteroid.sprite_size.y / 2 };
-	asteroid.position.x = (float)screen_size.width * ((int)1920 / 2) / 1920; asteroid.position.y = (float)screen_size.height * ((int)1080 / 2) / 1080;
+	asteroid.position.x = ((int)1920 / 2) * scale_x; asteroid.position.y = (1080.0f / 2) * scale_y;
+	asteroid.scale = (sfVector2f){ .15f * scale_x, .15f * scale_y };
 	create_sprite(asteroid.sprite, asteroid.texture, asteroid.origin, asteroid.scale, -90, asteroid.position);
 
 	beginning = sfClock_create();
@@ -40,10 +45,10 @@ void init(void) { // initialise les variables
 	life_time_shoot = sfClock_create();
 
 
-	mode.width = screen_size.width; // donne a la fenetre la taille de l'ecran
-	mode.height = screen_size.height;
+	mode.width = size_screen.width; // donne a la fenetre la taille de l'ecran
+	mode.height = size_screen.height;
 	mode.bitsPerPixel = 32;
-	window = sfRenderWindow_create(mode, "Asteroid", sfClose, NULL); // creer une window
+	window = sfRenderWindow_create(mode, "Asteroid", sfFullscreen, NULL); // creer une window
 	sfRenderWindow_setFramerateLimit(window, 60); // limite les fps a 60
 }
 
@@ -60,6 +65,7 @@ void destroy(void) { // detruit tous les sprites, textures, clock etc
 	destroy_spaceship();
 	destroy_animation();
 	destroy_uis();
+	destroy_map();
 }
 
 int main(void) { // main
@@ -77,6 +83,7 @@ int main(void) { // main
 		display_menu(window, event);
 		if (!is_game_over() && is_started() && !return_is_paused()) // si la partie n'est pas perdu
 		{
+			display_map(window);
 			update_life(); // actualise les vies
 			shoot(window); // permet au joueur de tirer
 			move_character(&asteroid, window); // deplace le personnage

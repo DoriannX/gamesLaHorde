@@ -133,6 +133,7 @@
     <ClCompile Include="character.c" />
     <ClCompile Include="dt.c" />
     <ClCompile Include="gameOver.c" />
+    <ClCompile Include="level_manager.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="menu_start.c" />
     <ClCompile Include="print.c" />
@@ -147,6 +148,7 @@
     <ClInclude Include="character.h" />
     <ClInclude Include="dt.h" />
     <ClInclude Include="gameOver.h" />
+    <ClInclude Include="level_manager.h" />
     <ClInclude Include="menu_start.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="score_manager.h" />

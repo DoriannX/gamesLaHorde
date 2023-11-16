@@ -9,6 +9,8 @@
 
 #include "character.h"
 #include "dt.h"
+#include "level_manager.h"
+#include "print.h"
 #include "shoot.h"
 #include "special_attack.h"
 
@@ -43,11 +45,14 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship[i].position = (sfVector2f){ (int)zone_x[zone], (int)zone_y[zone] };
 		spaceship[i].previous_position = spaceship[i].position;
 		spaceship[i].scale = (sfVector2f){ .2f, .2f };
-		switch (difficulty)
+		if(!is_leveling())
 		{
-		case 1: spaceship[i].speed = (float)4 / 17; break;
-		case 2: spaceship[i].speed = (float)8 / 17; break;
-		default: spaceship[i].speed = (float)2 / 17; break;
+			switch (difficulty)
+			{
+			case 1: spaceship[i].speed = (float)4 / 17; break;
+			case 2: spaceship[i].speed = (float)8 / 17; break;
+			default: spaceship[i].speed = (float)2 / 17; break;
+			}
 		}
 		spaceship[i].speed_max = spaceship[i].speed * 2;
 		spaceship[i].sprite = sfSprite_create();
@@ -69,11 +74,14 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_average[i].previous_position = spaceship_average[i].position;
 		spaceship_average[i].position = spaceship[i / 2].position;
 		spaceship_average[i].scale = (sfVector2f){ .1f, .1f };
-		switch (difficulty)
+		if(!is_leveling())
 		{
-		case 1: spaceship_average[i].speed = (float)6 / 17; break;
-		case 2: spaceship_average[i].speed = (float)8 / 17; break;
-		default: spaceship_average[i].speed = (float)4 / 17; break;
+			switch (difficulty)
+			{
+			case 1: spaceship_average[i].speed = (float)6 / 17; break;
+			case 2: spaceship_average[i].speed = (float)8 / 17; break;
+			default: spaceship_average[i].speed = (float)4 / 17; break;
+			}
 		}
 		spaceship_average[i].speed_max = spaceship_average[i].speed * 2;
 		spaceship_average[i].sprite = sfSprite_create();
@@ -97,11 +105,14 @@ void create_spaceship(void) // creer un vaisseau
 		spaceship_small[i].previous_position = spaceship_small[i].position;
 		spaceship_small[i].rotation = 0;
 		spaceship_small[i].scale = (sfVector2f){ .05f, .05f };
-		switch (difficulty)
+		if(!is_leveling())
 		{
-		case 1: spaceship_small[i].speed = (float)8 / 17; break;
-		case 2: spaceship_small[i].speed = (float)10 / 17; break;
-		default: spaceship_small[i].speed = (float)6 / 17; break;
+			switch (difficulty)
+			{
+			case 1: spaceship_small[i].speed = (float)8 / 17; break;
+			case 2: spaceship_small[i].speed = (float)10 / 17; break;
+			default: spaceship_small[i].speed = (float)6 / 17; break;
+			}
 		}
 		spaceship_small[i].speed_max = spaceship_small[i].speed * 2;
 		spaceship_small[i].sprite = sfSprite_create();
@@ -125,27 +136,28 @@ void update_speed(void)
 	{
 		switch (difficulty)
 		{
-		case 1: spaceship[i].speed = (float)4 / 17; break;
-		case 2: spaceship[i].speed = (float)8 / 17; break;
-		default: spaceship[i].speed = (float)2 / 17; break;
+		case 1: spaceship[i].speed = (float)4 / 17; spaceship[i].speed_max = spaceship[i].speed * 2; break;
+		case 2: spaceship[i].speed = (float)8 / 17; spaceship[i].speed_max = spaceship[i].speed * 2; break;
+		default: spaceship[i].speed = (float)2 / 17; spaceship[i].speed_max = spaceship[i].speed * 2; break;
 		}
 	}
 	for (int i = 0; i < 10; i++)
 	{
 		switch (difficulty)
 		{
-		case 1: spaceship_average[i].speed = (float)6 / 17; break;
-		case 2: spaceship_average[i].speed = (float)8 / 17; break;
-		default: spaceship_average[i].speed = (float)4 / 17; break;
+		case 1: spaceship_average[i].speed = (float)6 / 17; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
+		case 2: spaceship_average[i].speed = (float)8 / 17; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
+		default: spaceship_average[i].speed = (float)4 / 17; spaceship_average[i].speed_max = spaceship_average[i].speed * 2;  break;
+
 		}
 	}
 	for (int i = 0; i < 20; i++)
 	{
 		switch (difficulty)
 		{
-		case 1: spaceship_small[i].speed = (float)8 / 17; break;
-		case 2: spaceship_small[i].speed = (float)10 / 17; break;
-		default: spaceship_small[i].speed = (float)6 / 17; break;
+		case 1: spaceship_small[i].speed = (float)8 / 17; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
+		case 2: spaceship_small[i].speed = (float)10 / 17; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
+		default: spaceship_small[i].speed = (float)6 / 17; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
 		}
 	}
 }
@@ -224,8 +236,13 @@ void reset_pos_spaceship(void) // reset la position de tous les vaisseaux
 
 int created = 0;
 int destroyed = 0;
+int spaceship_destroyed = 0;
 int min_to_display_spaceship = 0;
 void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
+	if(spaceship_destroyed >= 20)
+	{
+		next_level();
+	}
 	if (created == 0)
 	{
 		created = 1;
@@ -234,7 +251,6 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 	}
 	for (int j = 0; j < 20; j++)
 	{
-		
 		if (spaceship_average[j / 2].little) // si le vaisseau de taille superieur a ete detruit
 		{
 			if (!spaceship_small[j].little) // et si le vaisseau n'a pas ete detruit
@@ -280,6 +296,7 @@ void spawn_spaceship(sfRenderWindow* window) { // spawn les vaisseaux
 		{
 			spaceship_small[j].position = (sfVector2f){ INFINITY, INFINITY }; // detruit le vaisseau
 			spaceship_small[j].little = 1;
+			spaceship_destroyed++;
 		}
 	}
 	for (int j = 0; j < 10; j++)
@@ -414,22 +431,40 @@ void reset_spaceship(void)
 	{
 		zone_x[i] = 0 ;
 		zone_y[i] = 0 ;
+
+		
 	}
 	for (int i = 0; i < 5; i++)
 	{
+		if (is_leveling())
+		{
+			spaceship[i].speed += 2.0f/17;
+			spaceship[i].speed_max = spaceship[i].speed * 2;
+		}
 		spaceship_exploded[i] = 0;
 	}
 	for (int i = 0; i < 10; i++)
 	{
+		if (is_leveling())
+		{
+			spaceship_average[i].speed += 2.0f / 17;
+			spaceship_average[i].speed_max = spaceship[i].speed * 2;
+		}
 		spaceship_exploded_average[i] = 0;
 	}
 	for (int i = 0; i < 20; i++)
 	{
+		if (is_leveling())
+		{
+			spaceship_small[i].speed += 2.0f / 17;
+			spaceship_small[i].speed_max = spaceship[i].speed * 2;
+		}
 		spaceship_exploded_little[i] = 0;
 	}
 	created = 0;
 	destroyed = 0;
 	min_to_display_spaceship = 0;
+	spaceship_destroyed = 0;
 }
 
 void set_difficulty(const int diff)

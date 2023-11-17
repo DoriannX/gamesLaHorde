@@ -197,9 +197,15 @@ void collision_between_spaceships(sfRenderWindow* window)
 				const float scalar_product_2 = spaceship[j].direction.x * collision_normal.x + spaceship[j].direction.y * collision_normal.y;
 				const sfVector2f rebound_vector_1 = { spaceship[i].direction.x - 2 * scalar_product_1 * collision_normal.x, spaceship[i].direction.y - 2 * scalar_product_1 * collision_normal.y };
 				const sfVector2f rebound_vector_2 = { spaceship[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
-				// donne la bonne direction au bond vaisseau
-				spaceship[i].position.x += .01f*collision_vector.x;
-				spaceship[i].position.y += .01f*collision_vector.y;
+
+
+				float inv_length_between_spaceships = 1.0f / (float)length_between_spaceships;
+				sfVector2f normalized_direction = { collision_vector.x * inv_length_between_spaceships, collision_vector.y * inv_length_between_spaceships };
+				float repulsion_force_magnitude = 1.0f;
+				sfVector2f repulsion_vector = { repulsion_force_magnitude * normalized_direction.x, repulsion_force_magnitude * normalized_direction.y };
+
+				spaceship[i].position.x += repulsion_vector.x;
+				spaceship[i].position.y += repulsion_vector.y;
 				spaceship[i].direction = rebound_vector_1;
 				collision_box = 0;
 				break;
@@ -222,8 +228,16 @@ void collision_between_spaceships(sfRenderWindow* window)
 				// donne la bonne direction au bond vaisseau
 				spaceship[i].direction = rebound_vector_1;
 				spaceship_average[j].direction = rebound_vector_2;
-				spaceship_average[i].position.x += .01f * collision_vector.x;
-				spaceship_average[i].position.y += .01f * collision_vector.y;
+
+				float inv_length_between_spaceships = 1.0f / (float)length_between_spaceships;
+				sfVector2f normalized_direction = { collision_vector.x * inv_length_between_spaceships, collision_vector.y * inv_length_between_spaceships };
+				float repulsion_force_magnitude = 1.0f;
+				sfVector2f repulsion_vector = { repulsion_force_magnitude * normalized_direction.x, repulsion_force_magnitude * normalized_direction.y };
+
+				spaceship[i].position.x += repulsion_vector.x;
+				spaceship[i].position.y += repulsion_vector.y;
+				spaceship_average[i].position.x += repulsion_vector.x;
+				spaceship_average[i].position.y += repulsion_vector.y;
 				collision_box_average = 0;
 				break;
 			}
@@ -246,8 +260,15 @@ void collision_between_spaceships(sfRenderWindow* window)
 				// donne la bonne direction au bond vaisseau
 				spaceship[i].direction = rebound_vector_1;
 				spaceship_small[j].direction = rebound_vector_2;
-				spaceship_small[i].position.x += .01f * collision_vector.x;
-				spaceship_small[i].position.y += .01f * collision_vector.y;
+
+				float inv_length_between_spaceships = 1.0f / (float)length_between_spaceships;
+				sfVector2f normalized_direction = { collision_vector.x * inv_length_between_spaceships, collision_vector.y * inv_length_between_spaceships };
+				float repulsion_force_magnitude = 1.0f;
+				sfVector2f repulsion_vector = { repulsion_force_magnitude * normalized_direction.x, repulsion_force_magnitude * normalized_direction.y };
+				spaceship[i].position.x += repulsion_vector.x;
+				spaceship[i].position.y += repulsion_vector.y;
+				spaceship_small[i].position.x += repulsion_vector.x;
+				spaceship_small[i].position.y += repulsion_vector.y;
 				collision_box_small = 0;
 				break;
 			}
@@ -273,8 +294,14 @@ void collision_between_spaceships(sfRenderWindow* window)
 				const sfVector2f rebound_vector_2 = { spaceship_average[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship_average[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
 				// donne la bonne direction au bond vaisseau
 				spaceship_average[i].direction = rebound_vector_1;
-				spaceship_average[i].position.x += .01f * collision_vector.x;
-				spaceship_average[i].position.y += .01f * collision_vector.y;
+
+				float inv_length_between_spaceships = 1.0f / (float)length_between_spaceships;
+				sfVector2f normalized_direction = { collision_vector.x * inv_length_between_spaceships, collision_vector.y * inv_length_between_spaceships };
+				float repulsion_force_magnitude = 1.0f;
+				sfVector2f repulsion_vector = { repulsion_force_magnitude * normalized_direction.x, repulsion_force_magnitude * normalized_direction.y };
+
+				spaceship_average[i].position.x += repulsion_vector.x;
+				spaceship_average[i].position.y += repulsion_vector.y;
 				collision_box_average = 0;
 				break;
 			}
@@ -297,8 +324,16 @@ void collision_between_spaceships(sfRenderWindow* window)
 				// donne la bonne direction au bond vaisseau
 				spaceship_average[i].direction = rebound_vector_1;
 				spaceship_small[j].direction = rebound_vector_2;
-				spaceship_small[i].position.x += .01f * collision_vector.x;
-				spaceship_small[i].position.y += .01f * collision_vector.y;
+
+				float inv_length_between_spaceships = 1.0f / (float)length_between_spaceships;
+				sfVector2f normalized_direction = { collision_vector.x * inv_length_between_spaceships, collision_vector.y * inv_length_between_spaceships };
+				float repulsion_force_magnitude = 1.0f;
+				sfVector2f repulsion_vector = { repulsion_force_magnitude * normalized_direction.x, repulsion_force_magnitude * normalized_direction.y };
+
+				spaceship_average[i].position.x += repulsion_vector.x;
+				spaceship_average[i].position.y += repulsion_vector.y;
+				spaceship_small[i].position.x += repulsion_vector.x;
+				spaceship_small[i].position.y += repulsion_vector.y;
 				collision_box_small = 0;
 				break;
 			}
@@ -325,8 +360,14 @@ void collision_between_spaceships(sfRenderWindow* window)
 				const sfVector2f rebound_vector_2 = { spaceship_small[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship_small[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
 				// donne la bonne direction au bond vaisseau
 				spaceship_small[i].direction = rebound_vector_1;
-				spaceship_small[i].position.x += .01f * collision_vector.x;
-				spaceship_small[i].position.y += .01f * collision_vector.y;
+
+				float inv_length_between_spaceships = 1.0f / (float)length_between_spaceships;
+				sfVector2f normalized_direction = { collision_vector.x * inv_length_between_spaceships, collision_vector.y * inv_length_between_spaceships };
+				float repulsion_force_magnitude = 1.0f;
+				sfVector2f repulsion_vector = { repulsion_force_magnitude * normalized_direction.x, repulsion_force_magnitude * normalized_direction.y };
+
+				spaceship_small[i].position.x += repulsion_vector.x;
+				spaceship_small[i].position.y += repulsion_vector.y;
 				collision_box_small = 0;
 				break;
 			}

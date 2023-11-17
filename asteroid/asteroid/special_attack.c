@@ -1,13 +1,8 @@
-
 #include <SFML/Window.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include "special_attack.h"
-
-#include <stdio.h>
-
 #include "character.h"
-#include "print.h"
 #include "scale.h"
 
 int exploded = 0;
@@ -84,23 +79,23 @@ void explode(sfRenderWindow* window) // attaque special
 
 }
 
-int is_exploded(void)
+int is_exploded(void) // retourne si les vaisseaux sont en train de se faire exploser
 {
 	return exploded;
 	
 }
 
-void destroy_animation(void)
+void destroy_animation(void) // detruit l'animation quand tout est fini
 {
 	sfRectangleShape_destroy(animation_rectangle);
 }
 
-int is_animating(void)
+int is_animating(void) // retourne si l'animation est en train de se passer
 {
 	return animate;
 }
 
-void reset_special_attack(void)
+void reset_special_attack(void) // reset l'attaque spe quand la partie est recommence
 {
 	exploded = 0;
 	animate = 0;

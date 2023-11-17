@@ -16,7 +16,7 @@ float return_dt(void) // retourne le dt en temps reel
 	return dt;
 }
 
-void reset_dt(void)
+void reset_dt(void) // reset le dt quand la partie est recommence
 {
 	previous_frame = (sfTime){ 0 };
 	now = (sfTime){ 0 };

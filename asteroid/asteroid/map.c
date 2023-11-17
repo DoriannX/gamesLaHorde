@@ -12,7 +12,7 @@
 sfSprite* map_sprite = NULL;
 sfTexture* map_texture = NULL;
 
-void display_map(sfRenderWindow* window)
+void display_map(sfRenderWindow* window) // affiche la map en arriere plan
 {
 	if(!map_sprite)
 	{
@@ -23,7 +23,7 @@ void display_map(sfRenderWindow* window)
 	sfRenderWindow_drawSprite(window, map_sprite, 0);
 }
 
-void destroy_map(void)
+void destroy_map(void) // detruit la map quand tout est terminé
 {
 	sfSprite_destroy(map_sprite);
 	sfTexture_destroy(map_texture);

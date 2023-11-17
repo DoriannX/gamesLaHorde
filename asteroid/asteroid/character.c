@@ -16,9 +16,9 @@ int can_move = 0;
 
 character asteroid = { // definie la structure asteroid
 	.vie = 3,
-	.sprite = 0,
+	.sprite = NULL,
 	.sprite_size = {0, 0},
-	.texture = 0,
+	.texture = NULL,
 	.position = {(float)1920 / 2, (float)1080 / 2},
 	.previous_position = {(float)1920 / 2, (float)1080 / 2},
 	.speed = 0,
@@ -35,19 +35,19 @@ float time_tuto = 0;
 void tuto(sfRenderWindow* window)
 {
 	if(tuto_bool[0])
-	{
-		print_str("Watch out, spaceships are attacking!", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x , 200* scale_y }, sfWhite, window, NULL);
-		print_str("[Q]/[LEFT] and [D]/[RIGHT]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
-		print_str("SHOOT : [space]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 400* scale_y }, sfWhite, window, NULL);
+	{ // affiche le tuto tourner et tirer
+		print_str("Watch out, spaceships are attacking!", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x , 200* scale_y }, sfWhite, window, NULL);
+		print_str("[Q]/[LEFT] and [D]/[RIGHT]", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
+		print_str("SHOOT : [space]", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 400* scale_y }, sfWhite, window, NULL);
 	}else if(tuto_bool[1])
-	{
-		print_str("Congrats ! You can now move.", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
-		print_str("MOVE : [z]/[UP]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
+	{ // affiche le tuto avancer
+		print_str("Congrats ! You can now move.", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
+		print_str("MOVE : [z]/[UP]", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
 
 	}else if(tuto_bool[2])
-	{
-		print_str("you can pause the game.", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
-		print_str("PAUSE : [ESCAPE]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
+	{ // affiche le tuto pause
+		print_str("you can pause the game.", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
+		print_str("PAUSE : [ESCAPE]", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
 		if(sfKeyboard_isKeyPressed(sfKeyEscape))
 		{
 			tuto_bool[2] = 0;
@@ -55,15 +55,15 @@ void tuto(sfRenderWindow* window)
 	}else if(tuto_bool[3])
 	{
 		if (time_tuto < 5)
-		{
+		{ // affiche le tuto capacité spéciale
 			time_tuto += return_dt() / 1000;
-			print_str("You can use your special ability ! (risky)", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
-			print_str("EXPLODE : [SHIFT]", 30 * scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
+			print_str("You can use your special ability ! (risky)", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 200* scale_y }, sfWhite, window, NULL);
+			print_str("EXPLODE : [SHIFT]", 30 * (int)scale_x, (sfVector2f) { (1920.0f / 2) * scale_x, 300* scale_y }, sfWhite, window, NULL);
 		}
 	}
 }
 
-void set_tuto(const int tuto, const int state)
+void set_tuto(const int tuto, const int state) // met le tuto à l'etat choisi
 {
 	tuto_bool[tuto] = state;
 }
@@ -77,6 +77,16 @@ void create_sprite(sfSprite* sprite, const sfTexture* texture, const sfVector2f 
 }
 
 void move_character(character* asteroide_move, sfRenderWindow* window) { // deplace un character
+	if(!asteroid.sprite)
+	{
+		asteroid.sprite = sfSprite_create();
+		asteroid.texture = sfTexture_createFromFile("sprites/spriteAsteroid.png", NULL);
+		asteroid.sprite_size = (sfVector2f){ 1024, 1024 };
+		asteroid.origin = (sfVector2f){ asteroid.sprite_size.x / 2, asteroid.sprite_size.y / 2 };
+		asteroid.position.x = ((int)1920 / 2) * scale_x; asteroid.position.y = (1080.0f / 2) * scale_y;
+		asteroid.scale = (sfVector2f){ .15f * scale_x, .15f * scale_y };
+		create_sprite(asteroid.sprite, asteroid.texture, asteroid.origin, asteroid.scale, -90, asteroid.position);
+	}
 	if (sfKeyboard_isKeyPressed(sfKeyRight) || sfKeyboard_isKeyPressed(sfKeyD)) { // fait tourner le personnage dans le sens horaire
 		angle += 5;
 		if (angle > 360) {// fait un cercle
@@ -149,18 +159,18 @@ void update_life(void) // fait perdre une vie au joueur
 	}
 }
 
-int is_can_move(void)
+int is_can_move(void) // retourne si le personnage a recupere la capacite d'avancer
 {
 	return can_move;
 }
 
-void set_can_move(const int state)
+void set_can_move(const int state) // permet au joueur de bouger ou nom
 {
 	can_move = state;
 }
 
 
-void reset_character(void)
+void reset_character(void) // reset le personnage quand la partie est recommence
 {
 	angle = 360 - 90;
 	can_move = 0;

@@ -57,14 +57,14 @@ void destroy_projectile(void) // detruit tout quand c'est termine
 	sfRectangleShape_destroy(projectile[nb_projectile].rectangle);
 }
 
-int collision(sfRenderWindow* window, const int j, const char* size) // detecte les collisions
+int collision(sfRenderWindow* window, const int j, const int size) // detecte les collisions
 {
-	if (size == "big") // si le vaisseau est gros
+	if (size == 2) // si le vaisseau est gros
 	{
 		int collision_box[5] = { 0 };
 		for (int i = min_to_display; i <= nb_projectile; i++) // tous les vaisseaux
 		{
-			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship[j].position.x) <= 100 * scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship[j].position.y) <= 100 * scale_y;
+			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship[j].position.x) <= 100 * (int)scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship[j].position.y) <= 100 * (int)scale_y;
 			if (collision_box[j])//si un projectile touche un vaisseau
 			{
 				add_score(25); // ajout e25 au score
@@ -81,12 +81,12 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 		}
 		return collision_box[j];
 	}
-	else if (size == "average") // si le vaisseau est moyen
+	else if (size == 1) // si le vaisseau est moyen
 	{
 		int collision_box[10] = { 0 };
 		for (int i = min_to_display; i <= nb_projectile; i++)
 		{
-			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_average[j].position.x) <= 60 * scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_average[j].position.y) <= 60 * scale_y;
+			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_average[j].position.x) <= 60 * (int)scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_average[j].position.y) <= 60 * (int)scale_y;
 			if (collision_box[j])
 			{
 				add_score(50);
@@ -103,12 +103,12 @@ int collision(sfRenderWindow* window, const int j, const char* size) // detecte 
 		}
 		return collision_box[j];
 	}
-	else if (size == "small") // si le vaisseau est petit
+	else if (size == 0) // si le vaisseau est petit
 	{
 		int collision_box[20] = { 0 };
 		for (int i = min_to_display; i <= nb_projectile; i++)
 		{
-			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_small[j].position.x) <= 25 * scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_small[j].position.y) <= 25 * scale_y;
+			collision_box[j] = abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).x - (int)spaceship_small[j].position.x) <= 25 * (int)scale_x && abs((int)sfRectangleShape_getPosition(projectile[i].rectangle).y - (int)spaceship_small[j].position.y) <= 25 * (int)scale_y;
 			if (collision_box[j])
 			{
 				add_score(100);
@@ -175,7 +175,7 @@ void shoot(sfRenderWindow* window) { // permet au joueur de tirer
 	}
 }
 
-void reset_shoot(void)
+void reset_shoot(void) // reset le shoot quand la partie est recommence
 {
 	for(int i = 0; i< 10; i++)
 	{

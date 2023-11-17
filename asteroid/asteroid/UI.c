@@ -2,11 +2,8 @@
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include <stdlib.h>
-#include <time.h>
 #include "UI.h"
-
 #include "character.h"
-#include "dt.h"
 #include "print.h"
 #include "scale.h"
 #include "score_manager.h"
@@ -20,8 +17,8 @@ sfTexture* cooldown_ability_texture = NULL;
 
 void display_uis(sfRenderWindow* window)
 {
-	print_str("score : ", 24* scale_x, (sfVector2f) { (1920.0f / 2 - 280)* scale_x, (1080 - 50)* scale_y }, sfWhite, window, NULL);
-	print_int(return_score(), 24 * scale_x, (sfVector2f) { (1920.0f/2 - 200)* scale_x, (1080 - 45)* scale_y }, sfWhite, window);
+	print_str("score : ", 24* (int)scale_x, (sfVector2f) { (1920.0f / 2 - 280)* scale_x, (1080 - 50)* scale_y }, sfWhite, window, NULL);
+	print_int(return_score(), 24 * (int)scale_x, (sfVector2f) { (1920.0f/2 - 200)* scale_x, (1080 - 45)* scale_y }, sfWhite, window);
 	if(!heart_sprite)
 	{
 		heart_sprite = sfSprite_create();
@@ -74,10 +71,10 @@ void display_uis(sfRenderWindow* window)
 	{
 		recharge_time = 60 - sfTime_asSeconds(sfClock_getElapsedTime(explode_time));
 	}
-	print_int((int)recharge_time, 20* scale_x, (sfVector2f) { (1920.0f / 2 - 280)* scale_x, 50* scale_y }, sfWhite, window); // affiche le temps restant avant de pouvoir reutiliser la capacite spe
+	print_int((int)recharge_time, 20* (int)scale_x, (sfVector2f) { (1920.0f / 2 - 280)* scale_x, 50* scale_y }, sfWhite, window); // affiche le temps restant avant de pouvoir reutiliser la capacite spe
 }
 
-void destroy_uis(void)
+void destroy_uis(void) // detruit tout quand tout est termine
 {
 	sfSprite_destroy(heart_sprite);
 	sfTexture_destroy(heart_texture);
@@ -86,7 +83,7 @@ void destroy_uis(void)
 	sfTexture_destroy(cooldown_ability_texture);
 }
 
-void reset_uis(void)
+void reset_uis(void) // reset les uis quand la partie est recommence
 {
 	heart_sprite = NULL;
 	cooldown_ability = NULL;

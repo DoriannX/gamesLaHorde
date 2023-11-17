@@ -104,12 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>"C:\CSFML-2.5.1-windows-64-bit\include"</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CSFML-2.5.1-windows-64-bit\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>"C:\CSFML-2.5.1-windows-64-bit\lib"</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\CSFML-2.5.1-windows-64-bit\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>csfml-audio.lib;csfml-graphics.lib;csfml-main.lib;csfml-network.lib;csfml-system.lib;csfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

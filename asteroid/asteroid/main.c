@@ -1,42 +1,27 @@
-
-#include <stdio.h>
 #include <SFML/Window.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include <stdlib.h>
 #include <time.h>
-
 #include "character.h"
 #include "dt.h"
 #include "arial.h"
 #include "gameOver.h"
 #include "map.h"
 #include "menu_start.h"
-#include "print.h"
 #include "scale.h"
-#include "score_manager.h"
 #include "shoot.h"
 #include "spaceship.h"
 #include "special_attack.h"
 #include "UI.h"
-#include "scale.h"
-sfVideoMode mode;
-// creation des variables
 
+sfVideoMode mode;
 sfRenderWindow* window;
 
 void init(void) { // initialise les variables
 
 	init_scale();
 	srand(time(NULL));
-
-	asteroid.sprite = sfSprite_create();
-	asteroid.texture = sfTexture_createFromFile("sprites/spriteAsteroid.png", NULL);
-	asteroid.sprite_size = (sfVector2f){ 1024, 1024 };
-	asteroid.origin = (sfVector2f){ asteroid.sprite_size.x / 2, asteroid.sprite_size.y / 2 };
-	asteroid.position.x = ((int)1920 / 2) * scale_x; asteroid.position.y = (1080.0f / 2) * scale_y;
-	asteroid.scale = (sfVector2f){ .15f * scale_x, .15f * scale_y };
-	create_sprite(asteroid.sprite, asteroid.texture, asteroid.origin, asteroid.scale, -90, asteroid.position);
 
 	beginning = sfClock_create();
 	arial = sfFont_createFromFile("arial.ttf");

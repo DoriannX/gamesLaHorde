@@ -1,6 +1,7 @@
-// ReSharper disable All
 #ifndef CHARACTER_H
 #define CHARACTER_H
+#include <SFML/Graphics.h>
+#include <SFML/System.h>
 typedef struct {
 	int vie;
 	sfSprite* sprite;

@@ -1,21 +1,9 @@
-﻿  menu_start.c
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.h(9,63): warning C4031: seconde liste de paramètres formels plus longue que la première liste
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(119,71): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(120,46): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(193,25): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(194,26): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(195,24): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(212,26): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(213,24): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(260,31): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(261,24): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(262,28): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(263,23): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(264,24): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(324,32): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(325,23): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(329,43): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(330,24): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(334,27): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
-C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\menu_start.c(335,24): warning C4244: 'fonction' : conversion de 'float' en 'const int', perte possible de données
+﻿  UI.c
+  spaceship.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(213,61): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(213,80): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(227,59): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(227,78): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+  special_attack.c
+  Génération de code en cours...
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

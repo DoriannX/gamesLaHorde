@@ -10,6 +10,7 @@
 #include "character.h"
 #include "dt.h"
 #include "level_manager.h"
+#include "print.h"
 #include "scale.h"
 #include "shoot.h"
 #include "special_attack.h"
@@ -39,8 +40,8 @@ void get_random_pos(void)
 	zone_y[3] = get_random_number((-120) * (int)scale_y, (1080 + 120) * (int)scale_y);
 
 	zone = get_random_number(0, 4);
+	
 }
-
 
 void create_spaceship(void) // creer un vaisseau
 {
@@ -105,6 +106,7 @@ void create_spaceship(void) // creer un vaisseau
 		sfSprite_setRotation(spaceship_average[i].sprite, (float)spaceship_average[i].rotation + 90);
 		sfSprite_setScale(spaceship_average[i].sprite, spaceship_average[i].scale);
 		sfSprite_setTexture(spaceship_average[i].sprite, spaceship_average[i].texture, sfFalse);
+
 	}
 	for (int i = 0; i < 20; i++)
 	{
@@ -136,6 +138,7 @@ void create_spaceship(void) // creer un vaisseau
 		sfSprite_setRotation(spaceship_small[i].sprite, (float)spaceship_small[i].rotation + 90);
 		sfSprite_setScale(spaceship_small[i].sprite, spaceship_small[i].scale);
 		sfSprite_setTexture(spaceship_small[i].sprite, spaceship_small[i].texture, sfFalse);
+
 	}
 }
 
@@ -169,6 +172,167 @@ void update_speed(void) // quand la difficulte est change au milieu de la partie
 		default: spaceship_small[i].speed = (3.0f / 17) * scale_x; spaceship_small[i].speed_max = spaceship_small[i].speed * 2; break;
 		}
 	}
+}
+
+int collision_box = 0;
+int collision_box_average = 0;
+int collision_box_small = 0;
+void collision_between_spaceships(sfRenderWindow* window)
+{
+
+	for(int i = 0; i<5;i++)
+	{
+		for(int j = 0; j < 5; j++) // gros contre gros
+		{
+			if (&spaceship[i].sprite != &spaceship[j].sprite)
+				collision_box = abs((int)spaceship[i].position.x - (int)spaceship[j].position.x) < 200 * (int)scale_x && abs((int)spaceship[i].position.y - (int)spaceship[j].position.y) < 200 * (int)scale_y;
+
+			if(collision_box)
+			{
+				//calcul du vecteur rebond
+				const sfVector2f collision_vector = { spaceship[i].position.x - spaceship[j].position.x, spaceship[i].position.y - spaceship[j].position.y };
+				const double length_between_spaceships = sqrt(pow(collision_vector.x, 2) + pow(collision_vector.y, 2));
+				const sfVector2f collision_normal = { collision_vector.x / (float)length_between_spaceships, collision_vector.y / (float)length_between_spaceships };
+				const float scalar_product_1 = spaceship[i].direction.x * collision_normal.x + spaceship[i].direction.y * collision_normal.y;
+				const float scalar_product_2 = spaceship[j].direction.x * collision_normal.x + spaceship[j].direction.y * collision_normal.y;
+				const sfVector2f rebound_vector_1 = { spaceship[i].direction.x - 2 * scalar_product_1 * collision_normal.x, spaceship[i].direction.y - 2 * scalar_product_1 * collision_normal.y };
+				const sfVector2f rebound_vector_2 = { spaceship[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
+				// donne la bonne direction au bond vaisseau
+				spaceship[i].position.x += .01f*collision_vector.x;
+				spaceship[i].position.y += .01f*collision_vector.y;
+				spaceship[i].direction = rebound_vector_1;
+				collision_box = 0;
+				break;
+			}
+			}
+		for (int j = 0; j < 10; j++) // gros contre moyen
+		{	if(j / 2 != i)
+				collision_box_average = abs((int)spaceship[i].position.x - (int)spaceship_average[j].position.x) <= 150 * (int)scale_x && abs((int)spaceship[i].position.y - (int)spaceship_average[j].position.y) <= 150 * (int)scale_y;
+
+			if (collision_box_average)
+			{
+				//calcul du vecteur rebond
+				const sfVector2f collision_vector = { spaceship_average[j].position.x - spaceship[i].position.x, spaceship_average[j].position.y - spaceship[i].position.y };
+				const float length_between_spaceships = (float)sqrt(pow(collision_vector.x, 2) + pow(collision_vector.y, 2));
+				const sfVector2f collision_normal = { collision_vector.x / length_between_spaceships, collision_vector.y / length_between_spaceships };
+				const float scalar_product_1 = spaceship[i].direction.x * collision_normal.x + spaceship[i].direction.y * collision_normal.y;
+				const float scalar_product_2 = spaceship_average[j].direction.x * collision_normal.x + spaceship_average[j].direction.y * collision_normal.y;
+				const sfVector2f rebound_vector_1 = { spaceship[i].direction.x - 2 * scalar_product_1 * collision_normal.x, spaceship[i].direction.y - 2 * scalar_product_1 * collision_normal.y };
+				const sfVector2f rebound_vector_2 = { spaceship_average[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship_average[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
+				// donne la bonne direction au bond vaisseau
+				spaceship[i].direction = rebound_vector_1;
+				spaceship_average[j].direction = rebound_vector_2;
+				spaceship_average[i].position.x += .01f * collision_vector.x;
+				spaceship_average[i].position.y += .01f * collision_vector.y;
+				collision_box_average = 0;
+				break;
+			}
+		}
+		for (int j = 0; j < 20; j++) // gros contre petit
+		{
+			if (j/4 != i)
+				collision_box_small = abs((int)spaceship[i].position.x - (int)spaceship_small[j].position.x) <= 100 * (int)scale_x && abs((int)spaceship[i].position.y - (int)spaceship_small[j].position.y) <= 100 * (int)scale_y;
+
+			if (collision_box_small)
+			{
+				//calcul du vecteur rebond
+				const sfVector2f collision_vector = { spaceship_small[j].position.x - spaceship[i].position.x, spaceship_small[j].position.y - spaceship[i].position.y };
+				const float length_between_spaceships = (float)sqrt(pow(collision_vector.x, 2) + pow(collision_vector.y, 2));
+				const sfVector2f collision_normal = { collision_vector.x / length_between_spaceships, collision_vector.y / length_between_spaceships };
+				const float scalar_product_1 = spaceship[i].direction.x * collision_normal.x + spaceship[i].direction.y * collision_normal.y;
+				const float scalar_product_2 = spaceship_small[j].direction.x * collision_normal.x + spaceship_small[j].direction.y * collision_normal.y;
+				const sfVector2f rebound_vector_1 = { spaceship[i].direction.x - 2 * scalar_product_1 * collision_normal.x, spaceship[i].direction.y - 2 * scalar_product_1 * collision_normal.y };
+				const sfVector2f rebound_vector_2 = { spaceship_small[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship_small[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
+				// donne la bonne direction au bond vaisseau
+				spaceship[i].direction = rebound_vector_1;
+				spaceship_small[j].direction = rebound_vector_2;
+				spaceship_small[i].position.x += .01f * collision_vector.x;
+				spaceship_small[i].position.y += .01f * collision_vector.y;
+				collision_box_small = 0;
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++) // gros contre moyen
+		{
+			if (j / 2 != i)
+				collision_box_average = abs((int)spaceship_average[i].position.x - (int)spaceship_average[j].position.x) <= 150 * (int)scale_x && abs((int)spaceship_average[i].position.y - (int)spaceship_average[j].position.y) <= 150 * (int)scale_y;
+
+			if (collision_box_average)
+			{
+				//calcul du vecteur rebond
+				const sfVector2f collision_vector = { spaceship_average[j].position.x - spaceship_average[i].position.x, spaceship_average[j].position.y - spaceship[i].position.y };
+				const float length_between_spaceships = (float)sqrt(pow(collision_vector.x, 2) + pow(collision_vector.y, 2));
+				const sfVector2f collision_normal = { collision_vector.x / length_between_spaceships, collision_vector.y / length_between_spaceships };
+				const float scalar_product_1 = spaceship_average[i].direction.x * collision_normal.x + spaceship_average[i].direction.y * collision_normal.y;
+				const float scalar_product_2 = spaceship_average[j].direction.x * collision_normal.x + spaceship_average[j].direction.y * collision_normal.y;
+				const sfVector2f rebound_vector_1 = { spaceship_average[i].direction.x - 2 * scalar_product_1 * collision_normal.x, spaceship_average[i].direction.y - 2 * scalar_product_1 * collision_normal.y };
+				const sfVector2f rebound_vector_2 = { spaceship_average[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship_average[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
+				// donne la bonne direction au bond vaisseau
+				spaceship_average[i].direction = rebound_vector_1;
+				spaceship_average[i].position.x += .01f * collision_vector.x;
+				spaceship_average[i].position.y += .01f * collision_vector.y;
+				collision_box_average = 0;
+				break;
+			}
+		}
+		for (int j = 0; j < 20; j++) // gros contre petit
+		{
+			if (j / 4 != i)
+				collision_box_small = abs((int)spaceship_average[i].position.x - (int)spaceship_small[j].position.x) <= 100 * (int)scale_x && abs((int)spaceship_average[i].position.y - (int)spaceship_small[j].position.y) <= 100 * (int)scale_y;
+
+			if (collision_box_small)
+			{
+				//calcul du vecteur rebond
+				const sfVector2f collision_vector = { spaceship_small[j].position.x - spaceship_average[i].position.x, spaceship_small[j].position.y - spaceship_average[i].position.y };
+				const float length_between_spaceships = (float)sqrt(pow(collision_vector.x, 2) + pow(collision_vector.y, 2));
+				const sfVector2f collision_normal = { collision_vector.x / length_between_spaceships, collision_vector.y / length_between_spaceships };
+				const float scalar_product_1 = spaceship_average[i].direction.x * collision_normal.x + spaceship_average[i].direction.y * collision_normal.y;
+				const float scalar_product_2 = spaceship_small[j].direction.x * collision_normal.x + spaceship_small[j].direction.y * collision_normal.y;
+				const sfVector2f rebound_vector_1 = { spaceship[i].direction.x - 2 * scalar_product_1 * collision_normal.x, spaceship[i].direction.y - 2 * scalar_product_1 * collision_normal.y };
+				const sfVector2f rebound_vector_2 = { spaceship_small[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship_small[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
+				// donne la bonne direction au bond vaisseau
+				spaceship_average[i].direction = rebound_vector_1;
+				spaceship_small[j].direction = rebound_vector_2;
+				spaceship_small[i].position.x += .01f * collision_vector.x;
+				spaceship_small[i].position.y += .01f * collision_vector.y;
+				collision_box_small = 0;
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i < 20; i++)
+	{
+		
+		for (int j = 0; j < 20; j++) // gros contre petit
+		{
+			if (j / 4 != i)
+				collision_box_small = abs((int)spaceship_small[i].position.x - (int)spaceship_small[j].position.x) <= 100 * (int)scale_x && abs((int)spaceship_small[i].position.y - (int)spaceship_small[j].position.y) <= 100 * (int)scale_y;
+
+			if (collision_box_small)
+			{
+				//calcul du vecteur rebond
+				const sfVector2f collision_vector = { spaceship_small[j].position.x - spaceship_small[i].position.x, spaceship_small[j].position.y - spaceship_small[i].position.y };
+				const float length_between_spaceships = (float)sqrt(pow(collision_vector.x, 2) + pow(collision_vector.y, 2));
+				const sfVector2f collision_normal = { collision_vector.x / length_between_spaceships, collision_vector.y / length_between_spaceships };
+				const float scalar_product_1 = spaceship_small[i].direction.x * collision_normal.x + spaceship_small[i].direction.y * collision_normal.y;
+				const float scalar_product_2 = spaceship_small[j].direction.x * collision_normal.x + spaceship_small[j].direction.y * collision_normal.y;
+				const sfVector2f rebound_vector_1 = { spaceship_small[i].direction.x - 2 * scalar_product_1 * collision_normal.x, spaceship_small[i].direction.y - 2 * scalar_product_1 * collision_normal.y };
+				const sfVector2f rebound_vector_2 = { spaceship_small[j].direction.x - 2 * scalar_product_2 * collision_normal.x, spaceship_small[j].direction.y - 2 * scalar_product_2 * collision_normal.y };
+				// donne la bonne direction au bond vaisseau
+				spaceship_small[i].direction = rebound_vector_1;
+				spaceship_small[i].position.x += .01f * collision_vector.x;
+				spaceship_small[i].position.y += .01f * collision_vector.y;
+				collision_box_small = 0;
+				break;
+			}
+		}
+	}
+
 }
 
 void destroy_spaceship(void) // detruit les vaisseaux quand le jeu est ferme

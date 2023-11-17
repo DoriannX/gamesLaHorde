@@ -13,5 +13,6 @@ void destroy_spaceship(void);
 void reset_spaceship(void);
 void set_difficulty(const int diff);
 void update_speed(void);
+void collision_between_spaceships(sfRenderWindow* window);
 
 #endif

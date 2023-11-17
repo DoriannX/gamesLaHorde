@@ -1,2 +1,6 @@
-﻿  LINK : C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe introuvable ou non généré par la dernière édition de liens incrémentielle ; édition de liens complète en cours
+﻿  spaceship.c
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(377,61): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(377,80): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(391,59): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\asteroid\spaceship.c(391,78): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
   asteroid.vcxproj -> C:\Users\Dodo Xav\Documents\GitHub\gamesLaHorde\asteroid\x64\Debug\asteroid.exe

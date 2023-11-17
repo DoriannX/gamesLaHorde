@@ -76,6 +76,7 @@ int main(void) { // main
 			explode(window); // permet au joueur d'utiliser son attaque spe
 			display_uis(window);
 			tuto(window);
+			collision_between_spaceships(window);
 		}
 		sfRenderWindow_display(window);
 	}
